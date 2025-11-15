@@ -1,3 +1,9 @@
+/**
+ * The Member class represents a gym member within the GymSystem.
+ * It stores basic account information as well as the member's
+ * selected membership type.
+ */
+
 public class Member {
 
     //Attributes
@@ -6,23 +12,48 @@ public class Member {
     private String password;
     private String membershipType;
 
-    //Constructor
+    
+    /**
+     * Constructs a new Member object with the given information.
+     *
+     * @param name            the member's full name
+     * @param username        the member's chosen username
+     * @param password        the password for the account
+     * @param membershipType  the membership plan the member has selected
+     */
     public Member(String name, String username, String password, String membershipType) {
         // initialize attributes
     }
 
     //Getters & Setters
+
+     /**
+     * Returns the member's full name.
+     * @return the name of the member
+     */
     public String getName() {
         return name;
      }
+    /**
+     * Returns the member's username.
+     * @return the username of the member
+     */
     public String getUsername() {
         return username;
      }
+    /**
+     * Returns the member's membership type.
+     * @return the membership type
+     */
     public String getMembershipType() {
         return membershipType;
      }
 
-    //Print info of member method
+
+    /**
+     * Displays the member's information, including name,
+     * username, and membership type.
+     */
     public void displayInfo() {
     
     }
