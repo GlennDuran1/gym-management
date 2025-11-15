@@ -1,3 +1,9 @@
+/**
+ * The GymSystem class manages members, trainers, and admin functionality
+ * within the gym application. It provides methods to add and display 
+ * both members and trainers, and show menu options to the user.
+ */
+
 public class GymSystem {
 
     //Attributes
@@ -7,30 +13,47 @@ public class GymSystem {
     private int memberCount;
     private int trainerCount;
     //Constructor
-
+    /**
+    *this a default constructor for the Gym system. 
+    */
     public GymSystem() {
         
     }
 
-    //Add a new member to the system method
+    /**
+    * This method should add a new member to the system method
+    *@param m the member to be added
+    */
     public void addMember(Member m) {
 
     }
-    //View all members with loop?
+    /**
+     * Displays all registered members by looping 
+     * through the members array and printing each one.
+     */
     public void displayAllMembers() {
         
     }
 
-    //Add new trainer method
+    /**
+     * Adds a new trainer to the system.
+     * @param t the Trainer object to be added
+     */
     public void addTrainer(Trainer t) {
 
     }
-    //view all trainers through loop
+    /**
+     * Displays all registered trainers by looping 
+     * through the trainers array and printing each one.
+     */
     public void displayAllTrainers() {
         
     }
 
-    //Prints options for user to choose options
+    /**
+     * Prints a list of available menu options 
+     * for the user to choose from.
+     */
     public void showMenu() {
         
     }
