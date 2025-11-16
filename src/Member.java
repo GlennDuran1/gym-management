@@ -11,7 +11,7 @@ public class Member {
     private String username;
     private String password;
     private String membershipType;
-
+    private String specialty;
     
     /**
      * Constructs a new Member object with the given information.
@@ -21,8 +21,12 @@ public class Member {
      * @param password        the password for the account
      * @param membershipType  the membership plan the member has selected
      */
-    public Member(String name, String username, String password, String membershipType) {
+    public Member(String name, String username, String password, String specialty) {
         // initialize attributes
+        this.name=name;
+        this.username= username;
+        this.password = password;
+        this.specialty = specialty;
     }
 
     //Getters & Setters
@@ -45,6 +49,11 @@ public class Member {
      * Returns the member's membership type.
      * @return the membership type
      */
+    public String getSpecialty(){
+        return specialty;
+    }
+    
+    
     public String getMembershipType() {
         return membershipType;
      }
@@ -55,6 +64,9 @@ public class Member {
      * username, and membership type.
      */
     public void displayInfo() {
+        System.out.printl("Trainer Name: " + name);
+        System.out.printl("Trainer Username: " + username);
+        System.out.printl("Trainer specialty: " + specialty);
     
     }
 }
