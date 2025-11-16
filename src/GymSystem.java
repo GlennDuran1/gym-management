@@ -55,6 +55,11 @@ public class GymSystem {
      * for the user to choose from.
      */
     public void showMenu() {
+        System.out.println("\n==== GYM SYSTEM MENU ====");
+        System.out.println("1. Register");
+        System.out.println("2. Login");
+        System.out.println("3. Exit");
+        System.out.print("Choose an option: ");
         
     }
 
