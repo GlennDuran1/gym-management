@@ -87,7 +87,7 @@ public class GymSystem {
         Sysem.out.println("Please enter a username:");
         String username = input.nextLine();
 
-        while(/*user exist*/){
+        while(usernameExist){
             System.out.println("User already exist. Try a different one:");
             username= input.nextLine();
         }
@@ -99,12 +99,49 @@ public class GymSystem {
         String password = input.nextLine();
 
         Trainer t = new Trainer(name,username,password,specialty);
+        //add trainer to array
+
+        System.out.printl("Trainer registered correctly");
     
             
     }
 
     public void registerMember(Scanner input){
-        
+        System.out.println("Please enter your name:");
+        Srting name = input.nextLine();
+
+        Sysem.out.println("Please enter a username:");
+        String username = input.nextLine();
+
+        while(/*user exist*/){
+            System.out.println("User already exist. Try a different one:");
+            username= input.nextLine();
+        }
+
+        System.out.println("Please enter your password");
+        String password = input.nextLine();
+
+        Member m = new Member(name, username, password);
+        //add member 
+        System.out.printl("Member registered correctly");
     }
 
+    public boolean usernameExist(String us){
+        for(/*loopcondition*/){
+            if(t.getUsername == us){
+                return true;
+            }
+        }
+
+        for(/*loop condition for member*/){
+            if( m.getUsername == us){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    
 }
