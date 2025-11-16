@@ -23,7 +23,8 @@ public class Main {
             int options = input.nextInt();
             switch (options) {
                 case 1:
-                    // register
+                    system.showRegisterMenu(input);
+                    
                     break;
                 case 2:
                     // login
