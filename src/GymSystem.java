@@ -63,4 +63,20 @@ public class GymSystem {
         
     }
 
+    public void showRegisterMenu(Scanner input){
+        System.out.println("\nRegister Menu:");
+        System.out.println("1. Register as Trainer");
+        System.out.println("2. Register as Member");
+        System.out.print("Choose an option: ");
+
+        int choice = input.nextInt();
+        switch(choice){
+            case 1:
+                registerTrainer(input);
+                break;
+            case 2:
+                registerMember(input);
+                break;
+    }
+
 }
