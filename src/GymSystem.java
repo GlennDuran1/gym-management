@@ -70,6 +70,7 @@ public class GymSystem {
         System.out.print("Choose an option: ");
 
         int choice = input.nextInt();
+        input.nextLine();
         switch(choice){
             case 1:
                 registerTrainer(input);
@@ -80,7 +81,26 @@ public class GymSystem {
     }
 
     public void registerTrainer(Scanner input){
-        
+        System.out.println("Please enter your name:");
+        Srting name = input.nextLine();
+
+        Sysem.out.println("Please enter a username:");
+        String username = input.nextLine();
+
+        while(/*user exist*/){
+            System.out.println("User already exist. Try a different one:");
+            username= input.nextLine();
+        }
+
+        System.out.println("Please enter your specialty:");
+        String specialty = input..nextLine();
+
+        System.out.println("Please enter your password");
+        String password = input.nextLine();
+
+        Trainer t = new Trainer(name,username,password,specialty);
+    
+            
     }
 
     public void registerMember(Scanner input){
