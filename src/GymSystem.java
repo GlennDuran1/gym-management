@@ -99,7 +99,7 @@ public class GymSystem {
         String password = input.nextLine();
 
         Trainer t = new Trainer(name,username,password,specialty);
-        //add trainer to array
+        traibers.add(t);
 
         System.out.printl("Trainer registered correctly");
     
@@ -122,18 +122,18 @@ public class GymSystem {
         String password = input.nextLine();
 
         Member m = new Member(name, username, password);
-        //add member 
+        members.add(m);
         System.out.printl("Member registered correctly");
     }
 
     public boolean usernameExist(String us){
-        for(/*loopcondition*/){
+        for(Trainer t: trainers){
             if(t.getUsername == us){
                 return true;
             }
         }
 
-        for(/*loop condition for member*/){
+        for(Member m: members){
             if( m.getUsername == us){
                 return true;
             }
