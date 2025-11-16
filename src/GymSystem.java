@@ -87,7 +87,7 @@ public class GymSystem {
         Sysem.out.println("Please enter a username:");
         String username = input.nextLine();
 
-        while(usernameExist){
+        while(usernameExist(username)){
             System.out.println("User already exist. Try a different one:");
             username= input.nextLine();
         }
@@ -113,7 +113,7 @@ public class GymSystem {
         Sysem.out.println("Please enter a username:");
         String username = input.nextLine();
 
-        while(/*user exist*/){
+        while(usernameExist(username)){
             System.out.println("User already exist. Try a different one:");
             username= input.nextLine();
         }
