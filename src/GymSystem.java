@@ -79,4 +79,12 @@ public class GymSystem {
                 break;
     }
 
+    public void registerTrainer(Scanner input){
+        
+    }
+
+    public void registerMember(Scanner input){
+        
+    }
+
 }
