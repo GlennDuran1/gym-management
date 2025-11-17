@@ -94,10 +94,16 @@ public class CSVHandler {
                     continue;
 
                 int sessionID = Integer.parseInt(data[0]);
-                String sessionName = data[1];
-                String date = data[2];
+                String type = data[1];
+                int capacity = Integer.parseInt(data[2]);
+                String date = data[3];
+                String startTime = data[4];
+                String endTime = data[5];
+                int trainerID = Integer.parseInt(data[6]);
 
-                WorkoutSession ws = new WorkoutSession(sessionID, sessionName, date);
+                Trainer trainer = system.findTrainerById(trainerID);
+
+                WorkoutSession ws = new WorkoutSession(sessionID, type, date, startTime, capacity, trainer);
                 system.addSession(ws);
             }
 
