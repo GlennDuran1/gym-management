@@ -22,13 +22,17 @@ public class GymSystem {
 
     public void displayAllMembers() {
         for (Member m : members) {
-            System.out.println(m);
+            m.displayInfo();
+            System.out.println("----------------");
+            
         }
     }
 
     public void displayAllTrainers() {
         for (Trainer t : trainers) {
-            System.out.println(t);
+            t.displayInfo();
+            System.out.println("----------------");
+            
         }
     }
 
