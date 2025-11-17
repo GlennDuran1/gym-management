@@ -3,12 +3,12 @@
  * within the gym application. It provides methods to add and display 
  * both members and trainers, and show menu options to the user.
  */
-
+import java.util.ArrayList;
 public class GymSystem {
 
     //Attributes
-    private Member[] members;
-    private Trainer[] trainers;
+    private ArrayList<Member> members;
+    private ArrayList<Trainer> trainers;
     private Admin admin;
     private int memberCount;
     private int trainerCount;
@@ -17,6 +17,8 @@ public class GymSystem {
     *this a default constructor for the Gym system. 
     */
     public GymSystem() {
+        members = new ArrayList<>();
+        trainers = new ArrayList<>();
         
     }
 
