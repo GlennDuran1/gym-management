@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test suite for Gym Management System classes.
  */
-public class JunitTesing {
+public class JunitTesting {
 
     /**
      * Tests that a Member object is created correctly,
