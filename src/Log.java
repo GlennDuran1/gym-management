@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Log {
 
-    private static final String LOG_FILE = "../data/log.txt";
+    private static final String LOG_FILE = "data/log.txt";
 
     private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss MM/dd/yy");
 
