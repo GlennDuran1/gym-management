@@ -1,46 +1,49 @@
-/**
- * The Trainer class represents a fitness trainer in the GymSystem.
- * Each trainer has a name and a specialty area they focus on.
- */
-
 public class Trainer {
 
-    //Attributes
+    // Attributes
     private String name;
+    private String username;
+    private String password;
     private String specialty;
 
-     /**
-     * Constructs a new Trainer with the specified name and specialty.
+    /**
+     * Constructs a new Trainer with full info.
      *
-     * @param name       the trainer's full name
-     * @param specialty  the trainer's area of specialization
+     * @param name      the trainer's full name
+     * @param username  the trainer's unique username
+     * @param password  the trainer's password
+     * @param specialty the trainer's area of specialization
      */
-    public Trainer(String name, String specialty) {
-    
+    public Trainer(String name, String username, String password, String specialty) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.specialty = specialty;
     }
 
-    //Getters & Setters
-    /**
-     * Returns the trainer's full name.
-     * @return the name of the trainer
-     */
+    // Getters
     public String getName() {
         return name;
-     }
+    }
 
-    /**
-     * Returns the area of expertise of the trainer.
-     * @return the trainer's specialty
-     */
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
     public String getSpecialty() {
         return specialty;
-     }
+    }
 
     /**
-     * Displays the trainer's information, including
-     * name and area of specialty.
+     * Display trainer's information.
      */
     public void displayInfo() {
-    
+        System.out.println("Trainer Name: " + name);
+        System.out.println("Username: " + username);
+        System.out.println("Specialty: " + specialty);
     }
 }
