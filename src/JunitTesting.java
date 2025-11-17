@@ -2,9 +2,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests that a Member object is created correctly and 
- * its getters, setters and credential check
- * work as expected.
+ * Tests that a Member object is created correctly.
+ * Tests its getters, setters and credential check
  */
 @Test
 void testMember(){
@@ -16,6 +15,10 @@ void testMember(){
   assertTrue(membertest.checkCredentials("johnd", "pass123"));
 }
 
+/**
+ * Tests that a Trainer object is created correctly.
+ * Tests its getters, setters and credential check
+ */
 @Test
 void testTrainer(){
   Trainer trainertest = new Trainer("Haru Ur", "haru", "password123", 2, "Sprint");
