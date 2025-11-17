@@ -185,7 +185,7 @@ public class GymSystem {
     public WorkoutSession searchSession(String key) {
         for (WorkoutSession s : sessions) {
             if (String.valueOf(s.getSessionID()).equals(key) ||
-                    s.getSessionName().equalsIgnoreCase(key) ||
+                    s.getType().equalsIgnoreCase(key) ||
                     s.getDate().equalsIgnoreCase(key)) {
 
                 return s;
@@ -404,6 +404,24 @@ public class GymSystem {
 
         Log.write("ADMIN REGISTER ADMIN: " + username);
         System.out.println("Admin registered successfully.");
+    }
+
+    public Trainer findTrainer(String username) {
+        for (Trainer t : trainers) {
+            if (t.getUserName().equalsIgnoreCase(username)) {
+                return t;
+            }
+        }
+        return null; // not found
+    }
+
+    public Trainer findTrainerById(int id) {
+        for (Trainer t : trainers) {
+            if (t.getId() == id) {
+                return t;
+            }
+        }
+        return null; // not found
     }
 
 }
