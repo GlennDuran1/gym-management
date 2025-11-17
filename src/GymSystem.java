@@ -262,5 +262,89 @@ public boolean isUsernameTaken(String username) {
 
     return false;
 }
+//Register Logic
+    public void showRegisterMenu(Scanner input) {
+        System.out.println("\nRegister Menu:");
+        System.out.println("1. Register as Trainer");
+        System.out.println("2. Register as Member");
+        System.out.print("Choose an option: ");
+
+        int choice = input.nextInt();
+        input.nextLine();
+
+        switch (choice) {
+            case 1:
+                registerTrainer(input);
+                break;
+            case 2:
+                registerMember(input);
+                break;
+        }
+    }
+
+    public void registerTrainer(Scanner input) {
+        System.out.println("Please enter your name:");
+        String name = input.nextLine();
+
+        System.out.println("Please enter a username:");
+        String username = input.nextLine();
+
+        while (usernameExist(username)) {
+            System.out.println("Username already exists. Try a different one:");
+            username = input.nextLine();
+        }
+
+        System.out.println("Please enter your specialty:");
+        String specialty = input.nextLine();
+
+        System.out.println("Please enter your password:");
+        String password = input.nextLine();
+
+        Trainer t = new Trainer(name, username, password, specialty);
+        trainers.add(t);
+
+        Log.write("Trainer " + username + " registered");
+
+        System.out.println("Trainer registered correctly.");
+    }
+
+    public void registerMember(Scanner input) {
+        System.out.println("Please enter your name:");
+        String name = input.nextLine();
+
+        System.out.println("Please enter a username:");
+        String username = input.nextLine();
+
+        while (usernameExist(username)) {
+            System.out.println("Username already exists. Try a different one:");
+            username = input.nextLine();
+        }
+
+        System.out.println("Please enter your password:");
+        String password = input.nextLine();
+
+        Member m = new Member(name, username, password);
+        members.add(m);
+
+        Log.write("Member " + username + " registered");
+
+        System.out.println("Member registered correctly.");
+    }
+
+    public boolean usernameExist(String us) {
+        for (Trainer t : trainers) {
+            if (t.getUsername().equals(us)) {
+                return true;
+            }
+        }
+
+        for (Member m : members) {
+            if (m.getUsername().equals(us)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 }
