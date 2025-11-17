@@ -3,31 +3,23 @@
  * Each trainer has a name and a specialty area they focus on.
  */
 
-public class Trainer {
-
-    //Attributes
-    private String name;
+public class Trainer extends Person{
     private String specialty;
-
      /**
-     * Constructs a new Trainer with the specified name and specialty.
+     * Constructs a new Trainer with the inherited name and specialty.
      *
      * @param name       the trainer's full name
+     * @param userName   the trainers username
+     * @param password   the trainer's password
+     * @param id         the trainer's id
      * @param specialty  the trainer's area of specialization
      */
-    public Trainer(String name, String specialty) {
-    
+    public Trainer(String name, String userName, String password, int id, String specialty) {
+    super(name, userName, password, id);
+    this.specialty = specialty;
     }
 
-    //Getters & Setters
-    /**
-     * Returns the trainer's full name.
-     * @return the name of the trainer
-     */
-    public String getName() {
-        return name;
-     }
-
+    //Getter
     /**
      * Returns the area of expertise of the trainer.
      * @return the trainer's specialty
@@ -35,12 +27,22 @@ public class Trainer {
     public String getSpecialty() {
         return specialty;
      }
+     //setter
+     public void setSpecialty(String specialty) {
+    this.specialty = specialty;
+}
 
     /**
      * Displays the trainer's information, including
      * name and area of specialty.
      */
     public void displayInfo() {
-    
+        System.out.println("Name: " + name);
+        System.out.println("Username: " + userName);
+        System.out.println("Specialty: " + specialty);
+    }
+    @Override
+    public String toString() {
+        return "Trainer: " + name + " | Username: " + userName + " | Specialty: " + specialty;
     }
 }

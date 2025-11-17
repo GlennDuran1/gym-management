@@ -4,12 +4,9 @@
  * selected membership type.
  */
 
-public class Member {
+public class Member extends Person{
 
     //Attributes
-    private String name;
-    private String username;
-    private String password;
     private String membershipType;
 
     
@@ -19,28 +16,15 @@ public class Member {
      * @param name            the member's full name
      * @param username        the member's chosen username
      * @param password        the password for the account
+     * @param id              the id unique to member
      * @param membershipType  the membership plan the member has selected
      */
-    public Member(String name, String username, String password, String membershipType) {
-        // initialize attributes
+    public Member(String name, String username, String password, int id, String membershipType) {
+        super(name, username, password, id);
+        this.membershipType = membershipType;
     }
 
-    //Getters & Setters
-
-     /**
-     * Returns the member's full name.
-     * @return the name of the member
-     */
-    public String getName() {
-        return name;
-     }
-    /**
-     * Returns the member's username.
-     * @return the username of the member
-     */
-    public String getUsername() {
-        return username;
-     }
+    //Getter
     /**
      * Returns the member's membership type.
      * @return the membership type
@@ -48,13 +32,23 @@ public class Member {
     public String getMembershipType() {
         return membershipType;
      }
+     //Setter
+     public void setMembershipType(String membershipType) {
+    this.membershipType = membershipType;
+}
 
-
+     //method
     /**
      * Displays the member's information, including name,
      * username, and membership type.
      */
     public void displayInfo() {
-    
+        System.out.println("Name: " + name);
+        System.out.println("Username: " + userName);
+        System.out.println("Membership: " + membershipType);
+    }
+    @Override
+    public String toString(){   
+        return "Member: " + name + " | Username: " + userName + " | Plan: " + membershipType;
     }
 }
