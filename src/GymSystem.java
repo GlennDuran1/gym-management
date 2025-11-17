@@ -3,45 +3,63 @@ import java.util.Scanner;
 
 /**
  * The GymSystem class manages members, trainers, and admin functionality
- * within the gym application. It provides methods to add and display 
+ * within the gym application. It provides methods to add and display
  * both members and trainers, and show menu options to the user.
  */
 
 public class GymSystem {
-//
-public int membersCount() { return members.size(); }
-public int trainerCount() { return trainers.size(); }
-public int adminCount() { return admins.size(); }
-public int sessionCount() { return sessions.size(); }
-public int planCount() { return plans.size(); }
+    //
+    public int membersCount() {
+        return members.size();
+    }
 
-    //Attributes
+    public int trainerCount() {
+        return trainers.size();
+    }
+
+    public int adminCount() {
+        return admins.size();
+    }
+
+    public int sessionCount() {
+        return sessions.size();
+    }
+
+    public int planCount() {
+        return plans.size();
+    }
+
+    // Attributes
     private ArrayList<Member> members;
     private ArrayList<Trainer> trainers;
     private ArrayList<Admin> admins;
     private ArrayList<WorkoutSession> sessions;
     private ArrayList<MembershipPlan> plans;
-    //Constructor
+
+    // Constructor
     /**
-    *this a default constructor for the Gym system. 
-    */
+     * this a default constructor for the Gym system.
+     */
     public GymSystem() {
-    members = new ArrayList<>();
-    trainers = new ArrayList<>();
-    admins = new ArrayList<>();
-    sessions = new ArrayList<>();
-    plans = new ArrayList<>();
+        members = new ArrayList<>();
+        trainers = new ArrayList<>();
+        admins = new ArrayList<>();
+        sessions = new ArrayList<>();
+        plans = new ArrayList<>();
     }
+
     /**
-    * This method should add a new member to the system method
-    *@param m the member to be added
-    */
+     * This method should add a new member to the system method
+     * 
+     * @param m the member to be added
+     */
     public void addMember(Member m) {
         members.add(m);
         System.out.println("Member added");
     }
+
     /**
-     * Displays all registered members by looping 
+     * Displays all registered members by looping
      * through the members list and printing each one.
      */
     public void displayAllMembers() {
@@ -54,18 +72,20 @@ public int planCount() { return plans.size(); }
             System.out.println(m);
         }
     }
+
     /** Search for Member by ID / name / username */
     public Member searchMember(String key) {
         for (Member m : members) {
             if (String.valueOf(m.getId()).equals(key) ||
-                m.getName().equalsIgnoreCase(key) ||
-                m.getUserName().equalsIgnoreCase(key)) {
+                    m.getName().equalsIgnoreCase(key) ||
+                    m.getUserName().equalsIgnoreCase(key)) {
 
                 return m;
             }
         }
         return null;
     }
+
     /** Delete Member */
     public boolean deleteMember(Member m) {
         return members.remove(m);
@@ -73,14 +93,16 @@ public int planCount() { return plans.size(); }
 
     /**
      * Adds a new trainer to the system.
+     * 
      * @param t the Trainer object to be added
      */
     public void addTrainer(Trainer t) {
         trainers.add(t);
         System.out.println("Trainer added");
     }
+
     /**
-     * Displays all registered trainers by looping 
+     * Displays all registered trainers by looping
      * through the trainers array and printing each one.
      */
     public void displayAllTrainers() {
@@ -88,25 +110,28 @@ public int planCount() { return plans.size(); }
             System.out.println("No trainers registered.");
             return;
         }
-         System.out.println("\n=== Registered Trainers ===");
+        System.out.println("\n=== Registered Trainers ===");
         for (Trainer t : trainers) {
             System.out.println(t);
         }
     }
+
     public Trainer searchTrainer(String key) {
         for (Trainer t : trainers) {
             if (String.valueOf(t.getId()).equals(key) ||
-                t.getName().equalsIgnoreCase(key) ||
-                t.getUserName().equalsIgnoreCase(key)) {
-                    
+                    t.getName().equalsIgnoreCase(key) ||
+                    t.getUserName().equalsIgnoreCase(key)) {
+
                 return t;
             }
         }
         return null;
     }
+
     public boolean deleteTrainer(Trainer t) {
         return trainers.remove(t);
     }
+
     public void addAdmin(Admin a) {
         admins.add(a);
         System.out.println("Admin added successfully.");
@@ -127,8 +152,8 @@ public int planCount() { return plans.size(); }
     public Admin searchAdmin(String key) {
         for (Admin a : admins) {
             if (String.valueOf(a.getId()).equals(key) ||
-                a.getName().equalsIgnoreCase(key) ||
-                a.getUserName().equalsIgnoreCase(key)) {
+                    a.getName().equalsIgnoreCase(key) ||
+                    a.getUserName().equalsIgnoreCase(key)) {
 
                 return a;
             }
@@ -139,6 +164,7 @@ public int planCount() { return plans.size(); }
     public boolean deleteAdmin(Admin a) {
         return admins.remove(a);
     }
+
     public void addSession(WorkoutSession s) {
         sessions.add(s);
         System.out.println("Session added successfully.");
@@ -159,8 +185,8 @@ public int planCount() { return plans.size(); }
     public WorkoutSession searchSession(String key) {
         for (WorkoutSession s : sessions) {
             if (String.valueOf(s.getSessionID()).equals(key) ||
-                s.getSessionName().equalsIgnoreCase(key) ||
-                s.getDate().equalsIgnoreCase(key)) {
+                    s.getSessionName().equalsIgnoreCase(key) ||
+                    s.getDate().equalsIgnoreCase(key)) {
 
                 return s;
             }
@@ -172,7 +198,7 @@ public int planCount() { return plans.size(); }
         return sessions.remove(s);
     }
 
-    //plan management 
+    // plan management
 
     public void addPlan(MembershipPlan p) {
         plans.add(p);
@@ -203,8 +229,9 @@ public int planCount() { return plans.size(); }
     public boolean deletePlan(MembershipPlan p) {
         return plans.remove(p);
     }
+
     /**
-     * Prints a list of available menu options 
+     * Prints a list of available menu options
      * for the user to choose from.
      */
     public void showMenu() {
@@ -213,57 +240,59 @@ public int planCount() { return plans.size(); }
         System.out.println("2. Login");
         System.out.println("3. Exit");
         System.out.print("Choose an option: ");
-        
+
     }
+
     public Member findMemberByCredentials(String username, String password) {
-    for (Member m : members) {
-        if (m.checkCredentials(username, password)) return m;
-    }
-    return null;
-}
-
-public Trainer findTrainerByCredentials(String username, String password) {
-    for (Trainer t : trainers) {
-        if (t.checkCredentials(username, password)) return t;
-    }
-    return null;
-}
-
-public Admin findAdminByCredentials(String username, String password) {
-    for (Admin a : admins) {
-        if (a.checkCredentials(username, password)) return a;
-    }
-    return null;
-}
-
-
-
-
-//username check
-
-public boolean isUsernameTaken(String username) {
-
-    for (Member m : members) {
-        if (m.getUserName().equalsIgnoreCase(username)) {
-            return true;
+        for (Member m : members) {
+            if (m.checkCredentials(username, password))
+                return m;
         }
+        return null;
     }
 
-    for (Trainer t : trainers) {
-        if (t.getUserName().equalsIgnoreCase(username)) {
-            return true;
+    public Trainer findTrainerByCredentials(String username, String password) {
+        for (Trainer t : trainers) {
+            if (t.checkCredentials(username, password))
+                return t;
         }
+        return null;
     }
 
-    for (Admin a : admins) {
-        if (a.getUserName().equalsIgnoreCase(username)) {
-            return true;
+    public Admin findAdminByCredentials(String username, String password) {
+        for (Admin a : admins) {
+            if (a.checkCredentials(username, password))
+                return a;
         }
+        return null;
     }
 
-    return false;
-}
-//Register Logic
+    // username check
+
+    public boolean isUsernameTaken(String username) {
+
+        for (Member m : members) {
+            if (m.getUserName().equalsIgnoreCase(username)) {
+                return true;
+            }
+        }
+
+        for (Trainer t : trainers) {
+            if (t.getUserName().equalsIgnoreCase(username)) {
+                return true;
+            }
+        }
+
+        for (Admin a : admins) {
+            if (a.getUserName().equalsIgnoreCase(username)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Register Logic
     public void showRegisterMenu(Scanner input) {
         System.out.println("\nRegister Menu:");
         System.out.println("1. Register as Trainer");
@@ -290,7 +319,7 @@ public boolean isUsernameTaken(String username) {
         System.out.println("Please enter a username:");
         String username = input.nextLine();
 
-        while (usernameExist(username)) {
+        while (isUsernameTaken(username)) {
             System.out.println("Username already exists. Try a different one:");
             username = input.nextLine();
         }
@@ -301,11 +330,12 @@ public boolean isUsernameTaken(String username) {
         System.out.println("Please enter your password:");
         String password = input.nextLine();
 
-        Trainer t = new Trainer(name, username, password, specialty);
+        int id = admins.size() + members.size() + trainers.size() + 1;
+
+        Trainer t = new Trainer(name, username, password, id, specialty);
         trainers.add(t);
 
         Log.write("Trainer " + username + " registered");
-
         System.out.println("Trainer registered correctly.");
     }
 
@@ -316,7 +346,7 @@ public boolean isUsernameTaken(String username) {
         System.out.println("Please enter a username:");
         String username = input.nextLine();
 
-        while (usernameExist(username)) {
+        while (isUsernameTaken(username)) {
             System.out.println("Username already exists. Try a different one:");
             username = input.nextLine();
         }
@@ -324,28 +354,56 @@ public boolean isUsernameTaken(String username) {
         System.out.println("Please enter your password:");
         String password = input.nextLine();
 
-        Member m = new Member(name, username, password);
+        System.out.println("Please enter your membership type:");
+        String membershipType = input.nextLine();
+
+        int id = admins.size() + members.size() + trainers.size() + 1;
+
+        Member m = new Member(name, username, password, id, membershipType);
         members.add(m);
 
         Log.write("Member " + username + " registered");
-
         System.out.println("Member registered correctly.");
     }
 
     public boolean usernameExist(String us) {
         for (Trainer t : trainers) {
-            if (t.getUsername().equals(us)) {
+            if (t.getUserName().equals(us)) {
                 return true;
             }
         }
 
         for (Member m : members) {
-            if (m.getUsername().equals(us)) {
+            if (m.getUserName().equals(us)) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    public void registerAdmin(GymSystem system, Scanner input) {
+        System.out.print("Enter name: ");
+        String name = input.nextLine();
+
+        System.out.print("Enter username: ");
+        String username = input.nextLine();
+
+        while (system.isUsernameTaken(username)) {
+            System.out.println("Username already taken. Try another:");
+            username = input.nextLine();
+        }
+
+        System.out.print("Enter password: ");
+        String password = input.nextLine();
+
+        int id = admins.size() + members.size() + trainers.size() + 1;
+
+        Admin admin = new Admin(name, username, password, id, system);
+        system.addAdmin(admin);
+
+        Log.write("ADMIN REGISTER ADMIN: " + username);
+        System.out.println("Admin registered successfully.");
     }
 
 }
