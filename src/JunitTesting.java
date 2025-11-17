@@ -23,5 +23,9 @@ void testTrainer{
 
 @Test
 void testAdmin{
-   
+  GymSystem systemtest = new GymSystem();
+  Admin admintest = new Admin("Admin User", "admin", "adminpass", 3, systemtest);
+  assertEquals("Admin User", admin.getName());
+  assertEquals("admin", admin.getUserName());
+  assertTrue(admin.checkCredentials("admin", "adminpass"));
 }
