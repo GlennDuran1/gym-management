@@ -1,71 +1,46 @@
-/**
- * The GymSystem class manages members, trainers, and admin functionality
- * within the gym application. It provides methods to add and display 
- * both members and trainers, and show menu options to the user.
- */
 import java.util.ArrayList;
+import java.util.Scanner;
+
 public class GymSystem {
 
-    //Attributes
     private ArrayList<Member> members;
     private ArrayList<Trainer> trainers;
-    private Admin admin;
-    private int memberCount;
-    private int trainerCount;
-    //Constructor
-    /**
-    *this a default constructor for the Gym system. 
-    */
+
+    // Constructor
     public GymSystem() {
         members = new ArrayList<>();
         trainers = new ArrayList<>();
-        
     }
 
-    /**
-    * This method should add a new member to the system method
-    *@param m the member to be added
-    */
     public void addMember(Member m) {
-
-    }
-    /**
-     * Displays all registered members by looping 
-     * through the members array and printing each one.
-     */
-    public void displayAllMembers() {
-        
+        members.add(m);
     }
 
-    /**
-     * Adds a new trainer to the system.
-     * @param t the Trainer object to be added
-     */
     public void addTrainer(Trainer t) {
-
+        trainers.add(t);
     }
-    /**
-     * Displays all registered trainers by looping 
-     * through the trainers array and printing each one.
-     */
+
+    public void displayAllMembers() {
+        for (Member m : members) {
+            System.out.println(m);
+        }
+    }
+
     public void displayAllTrainers() {
-        
+        for (Trainer t : trainers) {
+            System.out.println(t);
+        }
     }
 
-    /**
-     * Prints a list of available menu options 
-     * for the user to choose from.
-     */
     public void showMenu() {
         System.out.println("\n==== GYM SYSTEM MENU ====");
         System.out.println("1. Register");
         System.out.println("2. Login");
         System.out.println("3. Exit");
         System.out.print("Choose an option: ");
-        
     }
 
-    public void showRegisterMenu(Scanner input){
+    public void showRegisterMenu(Scanner input) {
         System.out.println("\nRegister Menu:");
         System.out.println("1. Register as Trainer");
         System.out.println("2. Register as Member");
@@ -73,77 +48,75 @@ public class GymSystem {
 
         int choice = input.nextInt();
         input.nextLine();
-        switch(choice){
+
+        switch (choice) {
             case 1:
                 registerTrainer(input);
                 break;
             case 2:
                 registerMember(input);
                 break;
+        }
     }
 
-    public void registerTrainer(Scanner input){
+    public void registerTrainer(Scanner input) {
         System.out.println("Please enter your name:");
-        Srting name = input.nextLine();
+        String name = input.nextLine();
 
-        Sysem.out.println("Please enter a username:");
+        System.out.println("Please enter a username:");
         String username = input.nextLine();
 
-        while(usernameExist(username)){
-            System.out.println("User already exist. Try a different one:");
-            username= input.nextLine();
+        while (usernameExist(username)) {
+            System.out.println("Username already exists. Try a different one:");
+            username = input.nextLine();
         }
 
         System.out.println("Please enter your specialty:");
-        String specialty = input..nextLine();
+        String specialty = input.nextLine();
 
-        System.out.println("Please enter your password");
+        System.out.println("Please enter your password:");
         String password = input.nextLine();
 
-        Trainer t = new Trainer(name,username,password,specialty);
-        traibers.add(t);
+        Trainer t = new Trainer(name, username, password, specialty);
+        trainers.add(t);
 
-        System.out.printl("Trainer registered correctly");
-    
-            
+        System.out.println("Trainer registered correctly.");
     }
 
-    public void registerMember(Scanner input){
+    public void registerMember(Scanner input) {
         System.out.println("Please enter your name:");
-        Srting name = input.nextLine();
+        String name = input.nextLine();
 
-        Sysem.out.println("Please enter a username:");
+        System.out.println("Please enter a username:");
         String username = input.nextLine();
 
-        while(usernameExist(username)){
-            System.out.println("User already exist. Try a different one:");
-            username= input.nextLine();
+        while (usernameExist(username)) {
+            System.out.println("Username already exists. Try a different one:");
+            username = input.nextLine();
         }
 
-        System.out.println("Please enter your password");
+        System.out.println("Please enter your password:");
         String password = input.nextLine();
 
         Member m = new Member(name, username, password);
         members.add(m);
-        System.out.printl("Member registered correctly");
+
+        System.out.println("Member registered correctly.");
     }
 
-    public boolean usernameExist(String us){
-        for(Trainer t: trainers){
-            if(t.getUsername == us){
+    public boolean usernameExist(String us) {
+        for (Trainer t : trainers) {
+            if (t.getUsername().equals(us)) {
                 return true;
             }
         }
 
-        for(Member m: members){
-            if( m.getUsername == us){
+        for (Member m : members) {
+            if (m.getUsername().equals(us)) {
                 return true;
             }
         }
+
         return false;
     }
-
-
-
-    
 }
