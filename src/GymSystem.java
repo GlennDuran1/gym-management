@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * The GymSystem class manages members, trainers, and admin functionality
