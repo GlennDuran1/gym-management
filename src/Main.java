@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * The Main class serves as the entry point for the Gym Management System.
  * It creates a GymSystem object and provides an interactive console-based
@@ -166,6 +168,10 @@ public class Main {
                     break;
                 case 3:
                     manageAdminsMenu(system, input);
+                    break;
+
+                case 4:
+                    manageWorkoutSessionsMenu(system, input);
                     break;
                 case 5:
                     System.out.println("Signed out.");
@@ -604,10 +610,206 @@ public class Main {
                 case 4:
                     done = true;
                     break;
+                default:
+                    System.out.println("Invalid option.");
+            }
+        }
+    }
+
+    private static void manageWorkoutSessionsMenu(GymSystem system, Scanner input) {
+        boolean back = false;
+
+        while (!back) {
+            System.out.println("\n=== MANAGE WORKOUT SESSIONS ===");
+            System.out.println("1. Add Session");
+            System.out.println("2. View Sessions");
+            System.out.println("3. Update Session");
+            System.out.println("4. Delete Session");
+            System.out.println("5. Back");
+            System.out.print("Choose: ");
+
+            int choice = input.nextInt();
+            input.nextLine();
+
+            switch (choice) {
+
+                case 1:
+                    addWorkoutSession(system, input);
+                    break;
+
+                case 2:
+                    viewWorkoutSessions(system, input);
+                    break;
+
+                case 3:
+                    updateWorkoutSession(system, input);
+                    break;
+
+                case 4:
+                    deleteWorkoutSession(system, input);
+                    break;
+
+                case 5:
+                    back = true;
+                    break;
+
+                default:
+                    System.out.println("Invalid option. Try again.");
+            }
+        }
+    }
+
+    private static void addWorkoutSession(GymSystem system, Scanner input) {
+        System.out.println("\n=== ADD WORKOUT SESSION ===");
+        System.out.print("Enter session id: ");
+        String idStr = input.nextLine();
+        int id = Integer.parseInt(idStr);
+
+        System.out.print("Enter session type: ");
+        String type = input.nextLine();
+
+        System.out.print("Enter session date (MM/DD/YY): ");
+        String date = input.nextLine();
+
+        System.out.print("Enter session time (HH:MM): ");
+        String time = input.nextLine();
+
+        System.out.print("Enter capacity: ");
+        int capacity = input.nextInt();
+        input.nextLine();
+
+        System.out.print("Enter trainer username: ");
+        String traineruser = input.nextLine();
+
+        while (system.findTrainer(traineruser) == null) {
+            System.out.println("Trainer not found. Enter a valid trainer username:");
+            traineruser = input.nextLine();
+        }
+        Trainer trainer = system.findTrainer(traineruser);
+
+        WorkoutSession w = new WorkoutSession(id, type, date, time, capacity, trainer);
+
+        system.addSession(w);
+
+        Log.write("ADMIN ADD SESSION: " + type + " by " + trainer);
+
+        System.out.println("Session added.");
+    }
+
+    private static void viewWorkoutSessions(GymSystem system, Scanner input) {
+        System.out.println("\n=== VIEW WORKOUT SESSIONS ===");
+        System.out.println("1. Display all sessions");
+        System.out.println("2. Search by ID / Type / Date");
+        System.out.print("Choose: ");
+
+        int choice = input.nextInt();
+        input.nextLine();
+
+        if (choice == 1) {
+            system.displayAllSessions();
+        } else if (choice == 2) {
+            System.out.print("Enter ID, type, or date: ");
+            String key = input.nextLine();
+
+            WorkoutSession found = system.searchSession(key);
+
+            if (found != null) {
+                System.out.println(found);
+            } else {
+                System.out.println("Session not found.");
+            }
+        } else {
+            System.out.println("Invalid option.");
+        }
+    }
+
+    private static void updateWorkoutSession(GymSystem system, Scanner input) {
+        System.out.println("\n=== UPDATE WORKOUT SESSION ===");
+
+        System.out.print("Enter session ID, type, or date to update: ");
+        String key = input.nextLine();
+
+        WorkoutSession s = system.searchSession(key);
+
+        if (s == null) {
+            System.out.println("Session not found.");
+            return;
+        }
+
+        boolean done = false;
+        while (!done) {
+            System.out.println("\nUpdating Session: " + s.getSessionId());
+            System.out.println("1. Change Date");
+            System.out.println("2. Change Time");
+            System.out.println("3. Change Trainer");
+            System.out.println("4. Back");
+            System.out.print("Choose: ");
+
+            int choice = input.nextInt();
+            input.nextLine();
+
+            switch (choice) {
+
+                case 1:
+                    System.out.print("New date: ");
+                    String newDate = input.nextLine();
+                    s.setDate(newDate);
+                    Log.write("ADMIN UPDATE SESSION DATE: " + s.getSessionId());
+                    System.out.println("Date updated.");
+                    break;
+
+                case 2:
+                    System.out.print("New time: ");
+                    String newTime = input.nextLine();
+                    s.setTime(newTime);
+                    Log.write("ADMIN UPDATE SESSION TIME: " + s.getSessionId());
+                    System.out.println("Time updated.");
+                    break;
+
+                case 3:
+                    System.out.print("New trainer username: ");
+                    String newTrainer = input.nextLine();
+                    while (system.findTrainer(newTrainer) == null) {
+                        System.out.println("Trainer not found. Try again:");
+                        newTrainer = input.nextLine();
+                    }
+                    s.setTrainerUsername(newTrainer);
+                    Log.write("ADMIN UPDATE SESSION TRAINER: " + s.getSessionId());
+                    System.out.println("Trainer updated.");
+                    break;
+
+                case 4:
+                    done = true;
+                    break;
 
                 default:
                     System.out.println("Invalid option.");
             }
+        }
+    }
+
+    private static void deleteWorkoutSession(GymSystem system, Scanner input) {
+        System.out.println("\n=== DELETE WORKOUT SESSION ===");
+
+        System.out.print("Enter session ID, type, or date: ");
+        String key = input.nextLine();
+
+        WorkoutSession s = system.searchSession(key);
+
+        if (s == null) {
+            System.out.println("Session not found.");
+            return;
+        }
+
+        System.out.print("Are you sure you want to delete this session? (y/n): ");
+        String confirm = input.nextLine();
+
+        if (confirm.equalsIgnoreCase("y")) {
+            system.deleteSession(s);
+            Log.write("ADMIN DELETE SESSION: " + s.getSessionId());
+            System.out.println("Session deleted.");
+        } else {
+            System.out.println("Delete cancelled.");
         }
     }
 
