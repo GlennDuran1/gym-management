@@ -6,7 +6,7 @@ void createMember{
   Member membertest = new Member("Mike", "MikeBeast998", "Mike'sGymPassword", "1", "Basic");
   assertEquals("Mike", membertest.getName());
   assertEquals("MikeBeast998", membertest.getUserName());
-  assertEquals("Mike'sGymPassword", membertest.getName());
+  assertEquals(10, membertest.getId());
   
 }
 
