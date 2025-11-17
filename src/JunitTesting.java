@@ -1,7 +1,11 @@
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-
+/**
+ * Tests that a Member object is created correctly and 
+ * its getters, setters and credential check
+ * work as expected.
+ */
 @Test
 void testMember(){
   Member membertest = new Member("Mike", "MikeBeast998", "Mike'sGymPassword", "1", "Basic");
