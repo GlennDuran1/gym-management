@@ -35,6 +35,10 @@ public class Trainer extends Person {
         this.specialty = specialty;
     }
 
+    public void setTrainerUsername(String newUsername) {
+        super.setUserName(newUsername);
+    }
+
     /**
      * Displays the trainer's information, including
      * name and area of specialty.
