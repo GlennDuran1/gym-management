@@ -1,10 +1,12 @@
 /**
  * The Admin class represents an administrator in the GymSystem.
  * Admins have elevated privileges such as adding, deleting, and managing
- * Members, Trainers, and other Admins. 
+ * Members, Trainers, and other Admins.
  *
- * <p>This class extends Person, inheriting general user information such as
- * name, username, password, and ID.</p>
+ * <p>
+ * This class extends Person, inheriting general user information such as
+ * name, username, password, and ID.
+ * </p>
  */
 public class Admin extends Person {
 
@@ -14,17 +16,16 @@ public class Admin extends Person {
     /**
      * Constructs a new Admin with personal details and a reference to the system.
      *
-     * @param name      the admin's full name
-     * @param userName  the admin's username
-     * @param password  the admin's password
-     * @param id        unique numeric admin ID
-     * @param system    the GymSystem instance this admin manages
+     * @param name     the admin's full name
+     * @param userName the admin's username
+     * @param password the admin's password
+     * @param id       unique numeric admin ID
+     * @param system   the GymSystem instance this admin manages
      */
     public Admin(String name, String userName, String password, int id, GymSystem system) {
         super(name, userName, password, id);
         this.system = system;
     }
-
 
     /**
      * Adds a new user to the GymSystem.
@@ -35,11 +36,11 @@ public class Admin extends Person {
      */
     public void addUser(Person p) {
         if (p instanceof Member) {
-            system.addMember((Member)p);
+            system.addMember((Member) p);
         } else if (p instanceof Trainer) {
-            system.addTrainer((Trainer)p);
+            system.addTrainer((Trainer) p);
         } else if (p instanceof Admin) {
-            system.addAdmin((Admin)p);
+            system.addAdmin((Admin) p);
         }
     }
 

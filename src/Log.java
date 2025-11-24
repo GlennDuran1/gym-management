@@ -13,8 +13,7 @@ public class Log {
     private static final String LOG_FILE = "data/log.txt";
 
     /** Timestamp format used for each log entry. (Example: 14:05:21 11/16/24) */
-    private static final DateTimeFormatter FORMAT =
-            DateTimeFormatter.ofPattern("HH:mm:ss MM/dd/yy");
+    private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss MM/dd/yy");
 
     /**
      * Writes a log entry to the log file.

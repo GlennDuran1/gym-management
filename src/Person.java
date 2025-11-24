@@ -48,8 +48,8 @@ public abstract class Person implements Login {
      *
      * @return the person's name
      */
-    public String getName() { 
-        return name; 
+    public String getName() {
+        return name;
     }
 
     /**
@@ -57,8 +57,8 @@ public abstract class Person implements Login {
      *
      * @return the person's username
      */
-    public String getUserName() { 
-        return userName; 
+    public String getUserName() {
+        return userName;
     }
 
     /**
@@ -66,8 +66,8 @@ public abstract class Person implements Login {
      *
      * @return the person's ID
      */
-    public int getId() { 
-        return id; 
+    public int getId() {
+        return id;
     }
 
     /**

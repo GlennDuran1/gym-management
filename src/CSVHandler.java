@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * CSVHandler is responsible for reading CSV files and loading
@@ -121,18 +123,61 @@ public class CSVHandler {
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
-            br.readLine(); // skip header
+            br.readLine();
 
             while ((line = br.readLine()) != null) {
+
                 if (line.trim().isEmpty())
                     continue;
 
-                MembershipPlan p = new MembershipPlan(line.trim());
-                system.addPlan(p);
+                String[] data = line.split(",");
+
+                if (data.length < 4)
+                    continue;
+
+                int id = Integer.parseInt(data[0].trim());
+                String planName = data[1].trim();
+                int duration = Integer.parseInt(data[2].trim());
+                double price = Double.parseDouble(data[3].trim());
+
+                MembershipPlan plan = new MembershipPlan(id, planName, duration, price);
+                system.addPlan(plan);
             }
 
         } catch (IOException e) {
             System.out.println("Error reading plans CSV: " + e.getMessage());
         }
     }
+
+    public static void saveMemberToFile(Member member, List<Member> members) {
+
+        try (FileWriter writer = new FileWriter("data/GymUsersData.csv")) {
+
+            // Header
+            writer.write("ID,First Name,Last Name,Username,Password,User Type,Membership,Start Date,End Date\n");
+
+            for (Member m : members) {
+
+                String[] nameParts = m.getName().split(" ", 2);
+                String firstName = nameParts[0];
+                String lastName = nameParts.length > 1 ? nameParts[1] : "";
+
+                writer.write(
+                        m.getId() + "," +
+                                firstName + "," +
+                                lastName + "," +
+                                m.getUserName() + "," +
+                                m.getPassword() + "," +
+                                "Member" + "," +
+                                m.getMembershipType() + "," +
+                                // m.getStartDate() + "," +
+                                // m.getEndDate() + "," +
+                                "" + "\n");
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error saving members CSV: " + e.getMessage());
+        }
+    }
+
 }

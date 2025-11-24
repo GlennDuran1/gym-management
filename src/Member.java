@@ -38,6 +38,10 @@ public class Member extends Person {
         this.membershipType = membershipType;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     // method
     /**
      * Displays the member's information, including name,
