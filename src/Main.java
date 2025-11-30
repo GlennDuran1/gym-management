@@ -33,7 +33,7 @@ public class Main {
             input.nextLine();
             switch (options) {
                 case 1:
-                    system.showRegisterMenu(input);
+                    system.showRegisterMenu(system, input);
                     system.displayAllTrainers();
                     break;
                 case 2:

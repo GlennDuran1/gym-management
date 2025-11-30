@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -27,6 +29,8 @@ public class WorkoutSession {
 
     /** Trainer assigned to conduct the workout session. */
     private Trainer trainer;
+    /** Members enroll in this session */
+    private List<Member> enrolledMembers = new ArrayList<>();
 
     /**
      * Constructs a new WorkoutSession with the given details.
@@ -313,5 +317,34 @@ public class WorkoutSession {
         Log.write("ADMIN ADD SESSION: " + type + " by " + trainer);
 
         System.out.println("Session added.");
+    }
+
+    public boolean hasSpace() {
+        return enrolledMembers.size() < capacity;
+    }
+
+    public boolean isEnrolled(Member member) {
+        for (Member m : enrolledMembers) {
+            if (m.getId() == member.getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean enroll(Member member) {
+        if (!hasSpace() || isEnrolled(member)) {
+            return false;
+        }
+        enrolledMembers.add(member);
+        return true;
+    }
+
+    public List<Member> getEnrolledMembers() {
+        return enrolledMembers;
+    }
+
+    public int getEnrolledMembersCount() {
+        return enrolledMembers.size();
     }
 }

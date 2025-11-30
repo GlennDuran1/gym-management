@@ -20,7 +20,7 @@ public class ManageMenus {
             switch (choice) {
                 case 1:
                     // Reuse existing admin registration
-                    system.registerAdmin(system, input);
+                    Register.registerAdmin(system, input);
                     break;
 
                 case 2:
@@ -108,7 +108,7 @@ public class ManageMenus {
 
                 case 1:
                     // Same as registering a trainer
-                    system.registerTrainer(input);
+                    Register.registerTrainer(system, input);
                     break;
 
                 case 2:
@@ -193,7 +193,7 @@ public class ManageMenus {
             switch (choice) {
                 case 1:
                     // reuse existing registration
-                    system.registerMember(input);
+                    Register.registerMember(system, input);
                     break;
 
                 case 2:

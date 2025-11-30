@@ -99,8 +99,19 @@ public class GymSystem {
         return trainers.get(trainers.size() - 1).getId();
     }
 
+    public int getLastAdminId() {
+        if (admins.isEmpty()) {
+            return 0;
+        }
+        return admins.get(admins.size() - 1).getId();
+    }
+
     public List<MembershipPlan> getPlans() {
         return new ArrayList<>(plans);
+    }
+
+    public List<WorkoutSession> getWorkoutSessions() {
+        return sessions;
     }
 
     // ---- Constructor ----
@@ -116,6 +127,7 @@ public class GymSystem {
         sessions = new ArrayList<>();
         plans = new ArrayList<>();
     }
+    // ---- MEMBERS METHODS ----
 
     /**
      * Adds a new member to the system.
@@ -169,6 +181,23 @@ public class GymSystem {
     }
 
     /**
+     * Finds a member by username and password.
+     */
+    public Member findMemberByCredentials(String username, String password) {
+        for (Member m : members) {
+            if (m.checkCredentials(username, password))
+                return m;
+        }
+        return null;
+    }
+
+    public void saveMemberChanges(Member member) {
+        CSVHandler.saveToFile(member, members);
+    }
+
+    // -------TRAINER METHODS--------//
+
+    /**
      * Adds a new trainer to the system.
      *
      * @param t Trainer object to be added
@@ -201,8 +230,8 @@ public class GymSystem {
     public Trainer searchTrainer(String key) {
         for (Trainer t : trainers) {
             if (String.valueOf(t.getId()).equals(key) ||
-                    t.getName().equalsIgnoreCase(key) ||
-                    t.getUserName().equalsIgnoreCase(key)) {
+                    t.getUserName().equalsIgnoreCase(key) ||
+                    t.getName().equalsIgnoreCase(key)) {
                 return t;
             }
         }
@@ -218,6 +247,47 @@ public class GymSystem {
     public boolean deleteTrainer(Trainer t) {
         return trainers.remove(t);
     }
+
+    /**
+     * Finds a trainer by username and password.
+     */
+    public Trainer findTrainerByCredentials(String username, String password) {
+        for (Trainer t : trainers) {
+            if (t.checkCredentials(username, password))
+                return t;
+        }
+        return null;
+    }
+
+    /**
+     * Searches for a trainer by username.
+     *
+     * @param username trainer username
+     * @return trainer or null
+     */
+    public Trainer findTrainer(String username) {
+        for (Trainer t : trainers) {
+            if (t.getUserName().equalsIgnoreCase(username))
+                return t;
+        }
+        return null;
+    }
+
+    /**
+     * Searches for a trainer by ID.
+     *
+     * @param id trainer ID
+     * @return trainer if found, else null
+     */
+    public Trainer findTrainerById(int id) {
+        for (Trainer t : trainers) {
+            if (t.getId() == id)
+                return t;
+        }
+        return null;
+    }
+
+    // --------ADMIN METHODS-------//
 
     /**
      * Adds a new admin to the system.
@@ -261,6 +331,17 @@ public class GymSystem {
     }
 
     /**
+     * Finds an admin by username and password.
+     */
+    public Admin findAdminByCredentials(String username, String password) {
+        for (Admin a : admins) {
+            if (a.checkCredentials(username, password))
+                return a;
+        }
+        return null;
+    }
+
+    /**
      * Deletes an admin.
      *
      * @param a admin to delete
@@ -269,6 +350,8 @@ public class GymSystem {
     public boolean deleteAdmin(Admin a) {
         return admins.remove(a);
     }
+
+    // -------SESSIONS METHODS------//
 
     /**
      * Adds a workout session.
@@ -322,6 +405,8 @@ public class GymSystem {
         return sessions.remove(s);
     }
 
+    // ---------MEMBERSHIP PLANS METHODS-----------//
+
     /**
      * Adds a membership plan to the system.
      *
@@ -372,6 +457,33 @@ public class GymSystem {
         return plans.remove(p);
     }
 
+    public boolean planExists(String planName) {
+        return searchPlan(planName) != null;
+    }
+
+    public void displayPlanInfo() {
+        if (plans.isEmpty()) {
+            System.out.println("No plans available.");
+            return;
+        }
+
+        System.out.println("\n=== Available Membership Pla ===");
+        for (MembershipPlan p : plans) {
+            p.toString();
+        }
+    }
+
+    public List<MembershipPlan> getUpgradeOptions(MembershipPlan current) {
+        List<MembershipPlan> upgrades = new ArrayList<>();
+
+        for (MembershipPlan p : plans) {
+            if (p.getPrice() > current.getPrice()) {
+                upgrades.add(p);
+            }
+        }
+        return upgrades;
+    }
+
     /**
      * Displays the main menu options for the gym system.
      */
@@ -381,39 +493,6 @@ public class GymSystem {
         System.out.println("2. Login");
         System.out.println("3. Exit");
         System.out.print("Choose an option: ");
-    }
-
-    /**
-     * Finds a member by username and password.
-     */
-    public Member findMemberByCredentials(String username, String password) {
-        for (Member m : members) {
-            if (m.checkCredentials(username, password))
-                return m;
-        }
-        return null;
-    }
-
-    /**
-     * Finds a trainer by username and password.
-     */
-    public Trainer findTrainerByCredentials(String username, String password) {
-        for (Trainer t : trainers) {
-            if (t.checkCredentials(username, password))
-                return t;
-        }
-        return null;
-    }
-
-    /**
-     * Finds an admin by username and password.
-     */
-    public Admin findAdminByCredentials(String username, String password) {
-        for (Admin a : admins) {
-            if (a.checkCredentials(username, password))
-                return a;
-        }
-        return null;
     }
 
     /**
@@ -438,12 +517,12 @@ public class GymSystem {
         return false;
     }
 
-    /**
-     * Displays the registration menu and routes the choice.
-     *
-     * @param input scanner input
-     */
-    public void showRegisterMenu(Scanner input) {
+    // /**
+    // * Displays the registration menu and routes the choice.
+    // *
+    // * @param input scanner input
+    // */
+    public void showRegisterMenu(GymSystem system, Scanner input) {
         System.out.println("\nRegister Menu:");
         System.out.println("1. Register as Trainer");
         System.out.println("2. Register as Member");
@@ -453,174 +532,9 @@ public class GymSystem {
         input.nextLine();
 
         switch (choice) {
-            case 1 -> registerTrainer(input);
-            case 2 -> registerMember(input);
+            case 1 -> Register.registerTrainer(system, input);
+            case 2 -> Register.registerMember(system, input);
         }
     }
 
-    /**
-     * Handles trainer registration.
-     *
-     * @param input user input
-     */
-    public void registerTrainer(Scanner input) {
-        System.out.println("Please enter your name:");
-        String name = input.nextLine();
-
-        System.out.println("Please enter a username:");
-        String username = input.nextLine();
-
-        while (isUsernameTaken(username)) {
-            System.out.println("Username already exists. Try a different one:");
-            username = input.nextLine();
-        }
-
-        System.out.println("Please enter your specialty:");
-        String specialty = input.nextLine();
-
-        System.out.println("Please enter your password:");
-        String password = input.nextLine();
-
-        int id = getLastTrainerId() + 1;
-
-        Trainer t = new Trainer(name, username, password, id, specialty);
-        trainers.add(t);
-
-        Log.write("Trainer " + username + " registered");
-        System.out.println("Trainer registered correctly.");
-    }
-
-    /**
-     * Handles member registration.
-     *
-     * @param input user input
-     */
-    public void registerMember(Scanner input) {
-        System.out.println("Please enter your name:");
-        String name = input.nextLine();
-
-        System.out.println("Please enter a username:");
-        String username = input.nextLine();
-
-        while (isUsernameTaken(username)) {
-            System.out.println("Username already exists. Try a different one:");
-            username = input.nextLine();
-        }
-
-        System.out.println("Please enter your password:");
-        String password = input.nextLine();
-
-        System.out.println("Please enter your membership type:");
-        String membershipType = input.nextLine();
-
-        while (!planExists(membershipType)) {
-            System.out.println("please enter a valid Membership Plan.");
-            displayPlanInfo();
-            membershipType = input.nextLine();
-        }
-
-        int id = getLastMemberId() + 1;
-
-        Member m = new Member(name, username, password, id, membershipType);
-        members.add(m);
-
-        Log.write("Member " + username + " registered");
-        System.out.println("Member registered correctly.");
-    }
-
-    /**
-     * Handles admin registration.
-     *
-     * @param system reference to gym system
-     * @param input  scanner input
-     */
-    public void registerAdmin(GymSystem system, Scanner input) {
-        System.out.print("Enter name: ");
-        String name = input.nextLine();
-
-        System.out.print("Enter username: ");
-        String username = input.nextLine();
-
-        while (system.isUsernameTaken(username)) {
-            System.out.println("Username already taken. Try another:");
-            username = input.nextLine();
-        }
-
-        System.out.print("Enter password: ");
-        String password = input.nextLine();
-
-        int id = admins.size() + members.size() + trainers.size() + 1;
-
-        Admin admin = new Admin(name, username, password, id, system);
-        system.addAdmin(admin);
-
-        Log.write("ADMIN REGISTER ADMIN: " + username);
-        System.out.println("Admin registered successfully.");
-    }
-
-    /**
-     * Searches for a trainer by username.
-     *
-     * @param username trainer username
-     * @return trainer or null
-     */
-    public Trainer findTrainer(String username) {
-        for (Trainer t : trainers) {
-            if (t.getUserName().equalsIgnoreCase(username))
-                return t;
-        }
-        return null;
-    }
-
-    /**
-     * Searches for a trainer by ID.
-     *
-     * @param id trainer ID
-     * @return trainer if found, else null
-     */
-    public Trainer findTrainerById(int id) {
-        for (Trainer t : trainers) {
-            if (t.getId() == id)
-                return t;
-        }
-        return null;
-    }
-
-    public boolean planExists(String planName) {
-        for (MembershipPlan p : plans) {
-            if (p.getPlanName().equalsIgnoreCase(planName)) {
-                return true; // plan found
-            }
-        }
-        return false; // not found
-    }
-
-    public void displayPlanInfo() {
-        if (plans.isEmpty()) {
-            System.out.println("No plans available.");
-            return;
-        }
-
-        System.out.println("\n=== Available Membership Pla ===");
-        for (MembershipPlan p : plans) {
-            System.out.println("- " + p.getPlanName());
-            System.out.println("- " + p.getDurationMonths());
-            System.out.println("- " + p.getPrice());
-        }
-    }
-
-    public void saveMemberChanges(Member member) {
-        CSVHandler.saveMemberToFile(member, members);
-    }
-
-    public List<MembershipPlan> getUpgradeOptions(MembershipPlan current) {
-        List<MembershipPlan> upgrades = new ArrayList<>();
-
-        for (MembershipPlan p : plans) {
-            if (p.getPrice() > current.getPrice()) {
-                upgrades.add(p);
-            }
-        }
-        return upgrades;
-    }
 }

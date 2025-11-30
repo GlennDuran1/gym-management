@@ -149,7 +149,7 @@ public class CSVHandler {
         }
     }
 
-    public static void saveMemberToFile(Member member, List<Member> members) {
+    public static void saveToFile(Member member, List<Member> members) {
 
         try (FileWriter writer = new FileWriter("data/GymUsersData.csv")) {
 
