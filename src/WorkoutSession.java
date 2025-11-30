@@ -167,6 +167,15 @@ public class WorkoutSession {
                 " | Trainer: " + (trainer != null ? trainer.getName() : "None");
     }
 
+    /**
+     * Deletes a workout session from the system.
+     * The user can search for a session by ID, type, or date.
+     * Once found, the method asks for confirmation before removing it.
+     * All deletions are logged.
+     *
+     * @param system The GymSystem instance used to locate and remove the session.
+     * @param input  Scanner used to read user input.
+     */
     public static void deleteWorkoutSession(GymSystem system, Scanner input) {
         System.out.println("\n=== DELETE WORKOUT SESSION ===");
 
@@ -192,6 +201,15 @@ public class WorkoutSession {
         }
     }
 
+    /**
+     * Updates a workout session's details.
+     * The user searches by ID, type, or date and is then presented with
+     * options to update the session's date, time, or trainer.
+     * Trainer updates include validation to ensure the trainer exists.
+     *
+     * @param system The GymSystem instance used to retrieve and modify the session.
+     * @param input  Scanner for reading user selections and updated values.
+     */
     public static void updateWorkoutSession(GymSystem system, Scanner input) {
         System.out.println("\n=== UPDATE WORKOUT SESSION ===");
 
@@ -257,6 +275,14 @@ public class WorkoutSession {
         }
     }
 
+    /**
+     * Displays workout sessions based on the user's choice.
+     * The user may either view all sessions or search for a specific session
+     * using an ID, type, or date.
+     *
+     * @param system The GymSystem instance used to retrieve session data.
+     * @param input  Scanner used to capture user input.
+     */
     public static void viewWorkoutSessions(GymSystem system, Scanner input) {
         System.out.println("\n=== VIEW WORKOUT SESSIONS ===");
         System.out.println("1. Display all sessions");
@@ -284,6 +310,15 @@ public class WorkoutSession {
         }
     }
 
+    /**
+     * Adds a new workout session to the system.
+     * Prompts the user for session type, date, time, capacity,
+     * and a trainer username. Trainer input is validated to ensure
+     * the trainer exists before creating the session.
+     *
+     * @param system The GymSystem instance used to add the new session.
+     * @param input  Scanner used to gather session details from the user.
+     */
     public static void addWorkoutSession(GymSystem system, Scanner input) {
         System.out.println("\n=== ADD WORKOUT SESSION ===");
         int id = system.getLastPlanId() + 1;
@@ -319,10 +354,22 @@ public class WorkoutSession {
         System.out.println("Session added.");
     }
 
+    /**
+     * Checks whether the workout session has available capacity.
+     *
+     * @return true if the number of enrolled members is less than the capacity,
+     *         false otherwise.
+     */
     public boolean hasSpace() {
         return enrolledMembers.size() < capacity;
     }
 
+    /**
+     * Determines whether a given member is already enrolled in the session.
+     *
+     * @param member The Member to check for enrollment.
+     * @return true if the member is already enrolled, false if not.
+     */
     public boolean isEnrolled(Member member) {
         for (Member m : enrolledMembers) {
             if (m.getId() == member.getId()) {
@@ -332,6 +379,12 @@ public class WorkoutSession {
         return false;
     }
 
+    /**
+     * Attempts to enroll a member in the workout session.
+     *
+     * @param member The Member attempting to enroll.
+     * @return true if enrollment is successful, false otherwise.
+     */
     public boolean enroll(Member member) {
         if (!hasSpace() || isEnrolled(member)) {
             return false;
@@ -340,10 +393,20 @@ public class WorkoutSession {
         return true;
     }
 
+    /**
+     * Returns the list of members currently enrolled in the session.
+     *
+     * @return A List of Member objects.
+     */
     public List<Member> getEnrolledMembers() {
         return enrolledMembers;
     }
 
+    /**
+     * Returns the number of members enrolled in the workout session.
+     *
+     * @return The total count of enrolled members.
+     */
     public int getEnrolledMembersCount() {
         return enrolledMembers.size();
     }

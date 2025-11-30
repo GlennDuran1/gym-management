@@ -2,8 +2,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Provides all top-level menu interfaces for system users, including Members,
+ * Trainers, and Admins. Each menu handles user interaction, validates input,
+ * and delegates specific operations to the appropriate management handlers.
+ */
+
 public class Menus {
 
+    /**
+     * Displays the menu for a logged-in member and handles their menu selection.
+     *
+     * @param system The GymSystem instance used to access system data.
+     * @param input  Scanner used to read user input from the console.
+     * @param member The currently logged-in Member.
+     */
     public static void memberMenu(GymSystem system, Scanner input, Member member) {
         while (true) {
             System.out.println("\n=== MEMBER MENU ===");
@@ -28,6 +41,13 @@ public class Menus {
         }
     }
 
+    /**
+     * Displays the menu for a logged-in trainer and handles their menu selection.
+     *
+     * @param system  The GymSystem instance used to access system data.
+     * @param input   Scanner used to read user input.
+     * @param trainer The currently logged-in Trainer.
+     */
     public static void trainerMenu(GymSystem system, Scanner input, Trainer trainer) {
         while (true) {
             System.out.println("\n=== TRAINER MENU ===");
@@ -48,6 +68,15 @@ public class Menus {
         }
     }
 
+    /**
+     * Displays the administrative menu and processes the admin's selected action.
+     *
+     * Logs the admin's logout action.
+     *
+     * @param system The GymSystem instance providing access to all system data.
+     * @param input  Scanner used for reading user selections.
+     * @param admin  The currently logged-in Admin.
+     */
     public static void adminMenu(GymSystem system, Scanner input, Admin admin) {
         while (true) {
             System.out.println("\n=== ADMIN MENU ===");
@@ -91,6 +120,13 @@ public class Menus {
         }
     }
 
+    /**
+     * Allows a member to view and enroll in available workout sessions.
+     *
+     * @param system The GymSystem instance used to access workout sessions.
+     * @param member The member attempting to enroll.
+     * @param input  Scanner used to read menu input.
+     */
     public static void enrollInSessionMenu(GymSystem system, Member member, Scanner input) {
 
         // Step 1: Get valid sessions

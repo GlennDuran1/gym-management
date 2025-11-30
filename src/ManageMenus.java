@@ -1,8 +1,21 @@
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Utility class responsible for handling all management menus within the Gym
+ * System.
+ */
+
 public class ManageMenus {
 
+    /**
+     * Displays and controls the admin management menu.
+     * Allows the user to add, view, update, and delete admin accounts.
+     *
+     * @param system The main GymSystem instance used for accessing and modifying
+     *               admin data.
+     * @param input  Scanner used to read user input from the console.
+     */
     public static void manageAdminsMenu(GymSystem system, Scanner input) {
         boolean back = false;
         while (!back) {
@@ -89,6 +102,15 @@ public class ManageMenus {
         }
     }
 
+    /**
+     * Displays and handles the trainer management menu.
+     * Allows the user to add new trainers, view trainers, update trainer
+     * information,
+     * and delete trainer accounts.
+     *
+     * @param system The GymSystem instance used for trainer operations.
+     * @param input  Scanner for reading user input.
+     */
     public static void manageTrainersMenu(GymSystem system, Scanner input) {
         boolean back = false;
 
@@ -176,6 +198,14 @@ public class ManageMenus {
         }
     }
 
+    /**
+     * Displays and manages the member menu, enabling the user to add, view,
+     * update, or delete member records.
+     *
+     * @param system The GymSystem instance used for accessing and modifying member
+     *               data.
+     * @param input  Scanner used for user input.
+     */
     public static void manageMembersMenu(GymSystem system, Scanner input) {
         boolean back = false;
         while (!back) {
@@ -259,6 +289,14 @@ public class ManageMenus {
         }
     }
 
+    /**
+     * Displays and manages the workout session menu.
+     * Allows the user to add new workout sessions, view existing ones,
+     * update session details, or delete sessions.
+     *
+     * @param system The GymSystem instance used for session operations.
+     * @param input  Scanner for reading user input.
+     */
     public static void manageWorkoutSessionsMenu(GymSystem system, Scanner input) {
         boolean back = false;
 
@@ -302,6 +340,13 @@ public class ManageMenus {
         }
     }
 
+    /**
+     * Displays and handles the membership plan management menu.
+     * Allows the user to add, view, update, and delete membership plans.
+     *
+     * @param system The GymSystem instance used to process membership plan data.
+     * @param input  Scanner used to capture user input.
+     */
     public static void managePlansMenu(GymSystem system, Scanner input) {
         boolean back = false;
 
@@ -407,6 +452,16 @@ public class ManageMenus {
         }
     }
 
+    /**
+     * Handles membership plan assignment or upgrade for a specific member.
+     * If the member already has a plan, available upgrades are shown.
+     * If not, the user is allowed to select a new plan from the list.
+     *
+     * @param system The GymSystem instance used to retrieve and update plan
+     *               information.
+     * @param input  Scanner used to read user choices.
+     * @param member The member whose membership plan is being managed.
+     */
     public static void managePlanMember(GymSystem system, Scanner input, Member member) {
 
         System.out.println("\n=== MANAGE MEMBERSHIP PLAN ===");

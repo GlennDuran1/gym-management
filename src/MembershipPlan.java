@@ -26,34 +26,74 @@ public class MembershipPlan {
 
     // -------- GETTERS & SETTERS --------
 
+    /**
+     * Returns the unique ID of the membership plan.
+     *
+     * @return the plan ID
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Sets the unique ID for the membership plan.
+     *
+     * @param id the new plan ID
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * Returns the name of the membership plan.
+     *
+     * @return the plan name
+     */
     public String getPlanName() {
         return planName;
     }
 
+    /**
+     * Updates the name of the membership plan.
+     *
+     * @param planName the new name of the plan
+     */
     public void setPlanName(String planName) {
         this.planName = planName;
     }
 
+    /**
+     * Returns the duration of the membership plan in months.
+     *
+     * @return number of months the plan lasts
+     */
     public int getDurationMonths() {
         return durationMonths;
     }
 
+    /**
+     * Sets the duration of the membership plan in months.
+     *
+     * @param durationMonths the new duration for the plan
+     */
     public void setDurationMonths(int durationMonths) {
         this.durationMonths = durationMonths;
     }
 
+    /**
+     * Returns the price of the membership plan.
+     *
+     * @return the plan price
+     */
     public double getPrice() {
         return price;
     }
 
+    /**
+     * Updates the price of the membership plan.
+     *
+     * @param price the new price of the plan
+     */
     public void setPrice(double price) {
         this.price = price;
     }

@@ -1,7 +1,21 @@
 import java.util.Scanner;
 
+/**
+ * Utility class that provides update operations for Members, Trainers, and
+ * Admins.
+ */
 public class Updates {
 
+    /**
+     * Displays and manages the update menu for a specific Member.
+     * Allows an admin to change the member's name, username, password,
+     * or membership plan. All updates are logged for accountability.
+     *
+     * @param system The GymSystem instance used for validating and applying
+     *               updates.
+     * @param input  Scanner used to read input from the console.
+     * @param member The Member object whose information will be updated.
+     */
     public static void updateMember(GymSystem system, Scanner input, Member member) {
         boolean done = false;
         while (!done) {
@@ -63,6 +77,15 @@ public class Updates {
         }
     }
 
+    /**
+     * Displays and manages the update menu for a Trainer.
+     * Allows modification of name, username, password, and specialty.
+     * Includes validation checks such as preventing duplicate usernames.
+     *
+     * @param system  The GymSystem instance used for update validation.
+     * @param input   Scanner used to read user input.
+     * @param trainer The Trainer whose data is being updated.
+     */
     public static void updateTrainer(GymSystem system, Scanner input, Trainer trainer) {
         boolean done = false;
 
@@ -127,6 +150,15 @@ public class Updates {
         }
     }
 
+    /**
+     * Displays and handles the update menu for an Admin account.
+     * Allows changing the admin's name, username, or password,
+     * with duplicate username validation and logging of all changes.
+     *
+     * @param system The GymSystem instance used to validate updates.
+     * @param input  Scanner used for reading user selections.
+     * @param admin  The Admin object being updated.
+     */
     public static void updateAdmin(GymSystem system, Scanner input, Admin admin) {
         boolean done = false;
         while (!done) {
