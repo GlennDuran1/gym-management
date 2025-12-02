@@ -34,6 +34,9 @@ public class GymSystem {
     /** List of all membership plans offered by the gym. */
     private ArrayList<MembershipPlan> plans;
 
+    private ArrayList<String[]> progress;
+
+
     // ---- Counters ----
 
     /**
@@ -80,10 +83,11 @@ public class GymSystem {
 
     public int getLastSessionId() {
         if (sessions.isEmpty()) {
-            return 0;
+        return 0;
         }
-        return sessions.get(plans.size() - 1).getSessionId();
+        return sessions.get(sessions.size() - 1).getSessionId();
     }
+
 
     public int getLastMemberId() {
         if (members.isEmpty()) {
@@ -126,6 +130,8 @@ public class GymSystem {
         admins = new ArrayList<>();
         sessions = new ArrayList<>();
         plans = new ArrayList<>();
+        progress = new ArrayList<>();
+
     }
     // ---- MEMBERS METHODS ----
 
@@ -394,6 +400,89 @@ public class GymSystem {
         }
         return null;
     }
+    /**
+     * returns workoutSessions assigned to a trainer
+     * @param trainerId id of trainer
+     * @return list of workoutSessions performed by the trainer
+     */
+    public List<WorkoutSession> getSessionsForTrainer(int trainerId) {
+    List<WorkoutSession> list = new ArrayList<>();
+    for (WorkoutSession s : sessions) {
+        if (s.getTrainer().getId() == trainerId) {
+            list.add(s);
+        }
+    }
+    return list;
+    }
+    // ==== PART B: TRAINER VIEW METHODS ====
+
+    /**
+     * Gets all sessions taught by a trainer using username.
+     *
+     * @param username trainer username
+     * @return list of sessions taught by the trainer
+     */
+    public List<WorkoutSession> getSessionsByTrainer(String username) {
+        List<WorkoutSession> list = new ArrayList<>();
+        for (WorkoutSession s : sessions) {
+            if (s.getTrainer().getUserName().equalsIgnoreCase(username)) {
+                list.add(s);
+            }
+        }
+        return list;
+    }
+
+    /**
+     * Returns all members enrolled in a given session.
+     *
+     * @param sessionId the id of the session
+     * @return list of enrolled members
+     */
+    public List<Member> getMembersInSession(int sessionId) {
+        WorkoutSession session = searchSession(String.valueOf(sessionId));
+        if (session == null) return new ArrayList<>();
+        return session.getEnrolledMembers();
+    }
+    
+
+    /**
+     * Enrolls a member into a session if space exists.
+     *
+     * @param member the member to enroll
+     * @param sessionId the session ID
+     * @return true if enrollment succeeded
+     */
+    public boolean enrollMemberInSession(Member member, int sessionId) {
+        WorkoutSession session = searchSession(String.valueOf(sessionId));
+        if (session == null) return false;
+
+        if (!session.hasSpace()) return false;
+
+        if (session.isEnrolled(member)) return false;
+
+        boolean enrolled = session.enrollMember(member);
+        if (enrolled) {
+            addProgressRecord(member.getId(), sessionId);
+        }
+
+        return enrolled;
+    }
+
+    /**
+     * Removes a member from a session.
+     *
+     * @param member the member
+     * @param sessionId the id of the session
+     * @return true if unenrollment succeeded
+     */
+    public boolean unenrollMemberFromSession(Member member, int sessionId) {
+        WorkoutSession session = searchSession(String.valueOf(sessionId));
+        if (session == null) return false;
+
+        return session.removeMember(member);
+    }
+
+
 
     /**
      * Deletes a workout session.
@@ -404,8 +493,64 @@ public class GymSystem {
     public boolean deleteSession(WorkoutSession s) {
         return sessions.remove(s);
     }
+    /** 
+     * Returns sessions that the member can currently enroll in
+     * 
+     * @param member the member to check availability for
+     * @return a list of sessions
+     */
+    public List<WorkoutSession> getAvailableSessionsForMember(Member member) {
+    List<WorkoutSession> list = new ArrayList<>();
+    for (WorkoutSession s : sessions) {
+        if (s.hasSpace() && !s.isEnrolled(member)) {
+            list.add(s);
+        }
+    }
+    return list;
+}
+
 
     // ---------MEMBERSHIP PLANS METHODS-----------//
+       // ==== PART B: ADMIN SESSION MANAGEMENT ====
+
+    /**
+     * Updates a session by replacing it with a new session object.
+     *
+     * @param updated updated session info
+     * @return true if updated
+     */
+    public boolean updateSession(WorkoutSession updated) {
+        for (int i = 0; i < sessions.size(); i++) {
+            if (sessions.get(i).getSessionId() == updated.getSessionId()) {
+                sessions.set(i, updated);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Deletes a session by ID.
+     *
+     * @param sessionId the id of the session
+     * @return true if deleted
+     */
+    public boolean deleteSession(int sessionId) {
+        for (WorkoutSession s : sessions) {
+            if (s.getSessionId() == sessionId) {
+                sessions.remove(s);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns a copy of all workout sessions.
+     */
+    public List<WorkoutSession> getAllSessions() {
+        return new ArrayList<>(sessions);
+    }
 
     /**
      * Adds a membership plan to the system.
@@ -469,20 +614,48 @@ public class GymSystem {
 
         System.out.println("\n=== Available Membership Pla ===");
         for (MembershipPlan p : plans) {
-            p.toString();
+            System.out.println(p);
         }
     }
+    /**
+     * Adds enrollment record for a member into a workoutSession into progress file
+     * @param memberId the ID of the member
+     * @param sessionId the ID of the session
+     */
+    public void addProgressRecord(int memberId, int sessionId) {
+    progress.add(new String[] {
+        String.valueOf(memberId),
+        String.valueOf(sessionId)
+    });
+    CSVHandler.saveProgress(progress);
+}
+    /**
+    * Returns members enrolled in a workout session.
+    * This method now simply delegates to getMembersInSession()
+    * for consistent behavior across the system.
+    */
+    public List<Member> getMembersEnrolledInSession(int sessionId) {
+        return getMembersInSession(sessionId);
+    }
+
+
 
     public List<MembershipPlan> getUpgradeOptions(MembershipPlan current) {
-        List<MembershipPlan> upgrades = new ArrayList<>();
+    List<MembershipPlan> upgrades = new ArrayList<>();
 
-        for (MembershipPlan p : plans) {
-            if (p.getPrice() > current.getPrice()) {
-                upgrades.add(p);
-            }
+    for (MembershipPlan p : plans) {
+        if (p == null) continue;
+
+        boolean higherPrice = p.getPrice() > current.getPrice();
+        boolean longerDuration = p.getDurationMonths() > current.getDurationMonths();
+
+        if (higherPrice || longerDuration) {
+            upgrades.add(p);
         }
-        return upgrades;
     }
+    return upgrades;
+}
+
 
     /**
      * Displays the main menu options for the gym system.
@@ -535,6 +708,14 @@ public class GymSystem {
             case 1 -> Register.registerTrainer(system, input);
             case 2 -> Register.registerMember(system, input);
         }
+    }
+    /**
+    * Returns all stored progress records (memberID → sessionID).
+    *
+    * @return list of progress entries
+    */
+    public List<String[]> getProgressRecords() {
+     return progress;
     }
 
 }

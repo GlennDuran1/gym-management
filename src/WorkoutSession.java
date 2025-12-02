@@ -22,7 +22,8 @@ public class WorkoutSession {
     private String date;
 
     /** Time at which the session takes place. */
-    private String time;
+    private String startTime;
+    private String endTime;
 
     /** Maximum number of participants allowed in the session. */
     private int capacity;
@@ -42,14 +43,20 @@ public class WorkoutSession {
      * @param capacity  maximum allowed participants
      * @param trainer   trainer assigned to the session
      */
-    public WorkoutSession(int sessionID, String type, String date, String time, int capacity, Trainer trainer) {
-        this.sessionID = sessionID;
-        this.type = type;
-        this.date = date;
-        this.time = time;
-        this.capacity = capacity;
-        this.trainer = trainer;
-    }
+    public WorkoutSession(int sessionID, String type, String date,
+                      String startTime, String endTime,
+                      int capacity, Trainer trainer) {
+
+    this.sessionID = sessionID;
+    this.type = type;
+    this.date = date;
+    this.startTime = startTime;
+    this.endTime = endTime;
+    this.capacity = capacity;
+    this.trainer = trainer;
+    this.enrolledMembers = new ArrayList<>();
+}
+
 
     // -------------------- Getters --------------------
 
@@ -85,9 +92,8 @@ public class WorkoutSession {
      *
      * @return time of session
      */
-    public String getTime() {
-        return time;
-    }
+    public String getStartTime() { return startTime; }
+    public String getEndTime() { return endTime; }
 
     /**
      * Gets the maximum capacity of the session.
@@ -123,9 +129,15 @@ public class WorkoutSession {
      *
      * @param newTime the new time of the session
      */
-    public void setTime(String newTime) {
-        this.time = newTime;
-    }
+    public void setStartTime(String startTime) { this.startTime = startTime; }
+    public void setEndTime(String endTime) { this.endTime = endTime; }
+/**
+ * sets trainer
+ * @param trainer
+ */
+    public void setTrainer(Trainer trainer) {
+    this.trainer = trainer;
+}
 
     // -------------------- Trainer Methods --------------------
 
@@ -160,12 +172,14 @@ public class WorkoutSession {
     @Override
     public String toString() {
         return "Session ID: " + sessionID +
-                " | " + type +
-                " | Date: " + date +
-                " | Time: " + time +
-                " | Capacity: " + capacity +
-                " | Trainer: " + (trainer != null ? trainer.getName() : "None");
-    }
+           ", Type: " + type +
+           ", Date: " + date +
+           ", Start: " + startTime +
+           ", End: " + endTime +
+           ", Capacity: " + capacity +
+           ", Trainer: " + (trainer != null ? trainer.getName() : "None");
+}
+
 
     /**
      * Deletes a workout session from the system.
@@ -246,9 +260,10 @@ public class WorkoutSession {
                     break;
 
                 case 2:
-                    System.out.print("New time: ");
-                    String newTime = input.nextLine();
-                    s.setTime(newTime);
+                    System.out.print("New start time: ");
+                    s.setStartTime(input.nextLine());
+                    System.out.print("New end time: ");
+                    s.setEndTime(input.nextLine());
                     Log.write("ADMIN UPDATE SESSION TIME: " + s.getSessionId());
                     System.out.println("Time updated.");
                     break;
@@ -260,7 +275,7 @@ public class WorkoutSession {
                         System.out.println("Trainer not found. Try again:");
                         newTrainer = input.nextLine();
                     }
-                    s.setTrainerUsername(newTrainer);
+                    s.setTrainer(system.findTrainer(newTrainer));
                     Log.write("ADMIN UPDATE SESSION TRAINER: " + s.getSessionId());
                     System.out.println("Trainer updated.");
                     break;
@@ -321,7 +336,7 @@ public class WorkoutSession {
      */
     public static void addWorkoutSession(GymSystem system, Scanner input) {
         System.out.println("\n=== ADD WORKOUT SESSION ===");
-        int id = system.getLastPlanId() + 1;
+        int id = system.getLastSessionId() + 1;
 
         System.out.print("Enter session type: ");
         String type = input.nextLine();
@@ -329,8 +344,12 @@ public class WorkoutSession {
         System.out.print("Enter session date (MM/DD/YY): ");
         String date = input.nextLine();
 
-        System.out.print("Enter session time (HH:MM): ");
-        String time = input.nextLine();
+        System.out.print("Enter session start time (HH:MM): ");
+        String start = input.nextLine();
+
+        System.out.print("Enter session end time (HH:MM): ");
+        String end = input.nextLine();
+
 
         System.out.print("Enter capacity: ");
         int capacity = input.nextInt();
@@ -345,7 +364,8 @@ public class WorkoutSession {
         }
         Trainer trainer = system.findTrainer(traineruser);
 
-        WorkoutSession w = new WorkoutSession(id, type, date, time, capacity, trainer);
+        WorkoutSession w = new WorkoutSession(id, type, date, start, end, capacity, trainer);
+
 
         system.addSession(w);
 
@@ -379,19 +399,7 @@ public class WorkoutSession {
         return false;
     }
 
-    /**
-     * Attempts to enroll a member in the workout session.
-     *
-     * @param member The Member attempting to enroll.
-     * @return true if enrollment is successful, false otherwise.
-     */
-    public boolean enroll(Member member) {
-        if (!hasSpace() || isEnrolled(member)) {
-            return false;
-        }
-        enrolledMembers.add(member);
-        return true;
-    }
+    
 
     /**
      * Returns the list of members currently enrolled in the session.
@@ -399,8 +407,8 @@ public class WorkoutSession {
      * @return A List of Member objects.
      */
     public List<Member> getEnrolledMembers() {
-        return enrolledMembers;
-    }
+        return new ArrayList<>(enrolledMembers);
+}
 
     /**
      * Returns the number of members enrolled in the workout session.
@@ -410,4 +418,29 @@ public class WorkoutSession {
     public int getEnrolledMembersCount() {
         return enrolledMembers.size();
     }
+
+    /**
+     * Enrolls a member in the session if space is available.
+     *
+     * @param m the member to enroll
+     * @return true if enrollment succeeds
+     */
+    public boolean enrollMember(Member m) {
+        if (isEnrolled(m)) return false;
+        if (!hasSpace()) return false;
+
+        enrolledMembers.add(m);
+        return true;
+    }
+
+    /**
+     * Removes a member from the session.
+     *
+     * @param m the member to remove
+     * @return true if the member was enrolled and removed
+     */
+    public boolean removeMember(Member m) {
+        return enrolledMembers.remove(m);
+    }
+
 }

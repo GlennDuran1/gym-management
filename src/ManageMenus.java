@@ -466,7 +466,13 @@ public class ManageMenus {
 
         System.out.println("\n=== MANAGE MEMBERSHIP PLAN ===");
 
-        MembershipPlan currentPlan = system.searchPlan(member.getMembershipType());
+        MembershipPlan currentPlan = null;
+        String planName = member.getMembershipType();
+
+        if (planName != null && !planName.isEmpty()) {
+            currentPlan = system.searchPlan(planName);
+}
+
 
         // -------------------------------
         // CASE 1: MEMBER ALREADY HAS A PLAN
@@ -514,7 +520,6 @@ public class ManageMenus {
         if (system.planCount() == 0) {
             System.out.println("No Plans Available");
         }
-        system.displayPlanInfo();
 
         System.out.println("\nAvailable Plans:");
         for (int i = 0; i < system.planCount(); i++) {

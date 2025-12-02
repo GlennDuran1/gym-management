@@ -73,3 +73,12 @@
 23:55:54 11/29/25 - Admin: harrypotter loaded in the system
 23:55:54 11/29/25 - Member: rickblaine loaded in the system
 23:56:20 11/29/25 - LOGIN (Member): rickblaine
+01:31:29 12/02/25 - Trainer glenn registered
+01:32:14 12/02/25 - LOGIN (Member): hermionegranger
+04:07:43 12/02/25 - LOGIN (Member): hermionegranger
+04:07:43 12/02/25 - LOGIN (Member): hermionegranger
+04:07:43 12/02/25 - MEMBER NEW PLAN: hermionegranger -> Basic
+04:07:43 12/02/25 - LOGIN (Member): hermionegranger
+04:07:43 12/02/25 - LOGIN (Trainer): ellenripley
+04:07:43 12/02/25 - LOGIN (Admin): michaelcorleone
+04:07:43 12/02/25 - LOGOUT (Admin): michaelcorleone

@@ -115,6 +115,6 @@ public class Admin extends Person {
      */
     @Override
     public String toString() {
-        return "Admin: " + name + " | Username: " + userName;
+       return "Admin: " + getName() + " | Username: " + getUserName();
     }
 }

@@ -19,11 +19,17 @@ public class Main {
 
         GymSystem system = new GymSystem();
         // Load CSV data
-        CSVHandler.loadUsers("data/GymUsersData.csv", system);
-        CSVHandler.loadSessions("data/GymSessions.csv", system);
-        CSVHandler.loadPlans("data/GymPlans.csv", system);
+        try {
+    CSVHandler.loadUsers("data/GymUsersData.csv", system);
+    CSVHandler.loadSessions("data/GymSessions.csv", system);
+    CSVHandler.loadPlans("data/GymPlans.csv", system);
+    System.out.println("CSV Data Loaded Successfully.");
+} catch (Exception e) {
+    System.out.println("Error loading CSV files: " + e.getMessage());
+}
 
-        System.out.println("CSV Data Loaded Successfully.");
+
+
 
         Scanner input = new Scanner(System.in);
         boolean running = true;
