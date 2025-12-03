@@ -1,0 +1,8 @@
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
+@Suite
+@SelectClasses({
+    GymTestsPart1.class,
+    GymTestsPart2.class
+})
+public class TestSuite { }

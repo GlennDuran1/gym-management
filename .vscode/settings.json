@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "src",
+        "tests"
+    ],
+    "java.project.referencedLibraries": [
+        "c:\\Users\\glenn\\Downloads\\junit-platform-console-standalone-1.10.2.jar"
+    ]
+}
