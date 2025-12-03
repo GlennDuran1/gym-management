@@ -31,10 +31,21 @@ public class Trainer extends Person {
     }
 
     // setter
+
+    /**
+     * Sets the trainer's specialty.
+     *
+     * @param specialty the new specialty to assign to the trainer
+     */
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
     }
 
+    /**
+     * Sets a new username for the trainer.
+     *
+     * @param newUsername the new username to assign to the trainer
+     */
     public void setTrainerUsername(String newUsername) {
         super.setUserName(newUsername);
     }

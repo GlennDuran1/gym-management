@@ -20,16 +20,13 @@ public class Main {
         GymSystem system = new GymSystem();
         // Load CSV data
         try {
-    CSVHandler.loadUsers("data/GymUsersData.csv", system);
-    CSVHandler.loadSessions("data/GymSessions.csv", system);
-    CSVHandler.loadPlans("data/GymPlans.csv", system);
-    System.out.println("CSV Data Loaded Successfully.");
-} catch (Exception e) {
-    System.out.println("Error loading CSV files: " + e.getMessage());
-}
-
-
-
+            CSVHandler.loadUsers("data/GymUsersData.csv", system);
+            CSVHandler.loadSessions("data/GymSessions.csv", system);
+            CSVHandler.loadPlans("data/GymPlans.csv", system);
+            System.out.println("CSV Data Loaded Successfully.");
+        } catch (Exception e) {
+            System.out.println("Error loading CSV files: " + e.getMessage());
+        }
 
         Scanner input = new Scanner(System.in);
         boolean running = true;
@@ -56,6 +53,14 @@ public class Main {
         }
         input.close();
     }
+
+    /**
+     * Handles the login process for the gym management system.
+     *
+     * @param system the GymSystem instance used to verify user credentials and
+     *               access user data
+     * @param input  the Scanner used to read login input from the console
+     */
 
     private static void login(GymSystem system, Scanner input) {
         System.out.print("Enter username: ");

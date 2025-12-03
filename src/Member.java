@@ -33,13 +33,24 @@ public class Member extends Person {
         return membershipType;
     }
 
-    // Setter
-    public void setMembershipType(String membershipType) {
-        this.membershipType = membershipType;
-    }
-
+    /**
+     * Returns the member's password.
+     *
+     * @return the password associated with this member
+     */
     public String getPassword() {
         return password;
+    }
+
+    // Setter
+
+    /**
+     * Updates the member's membership type.
+     *
+     * @param membershipType the new membership type to assign to the member
+     */
+    public void setMembershipType(String membershipType) {
+        this.membershipType = membershipType;
     }
 
     // method

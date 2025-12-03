@@ -1,5 +1,20 @@
 import java.util.Scanner;
 
+/**
+ * Utility class responsible for handling user registration processes within
+ * the gym management system.
+ * <p>
+ * This class provides static methods to register new Members, Trainers, and
+ * Admins. Each method collects input from the user, validates usernames to
+ * prevent duplicates, creates the appropriate user object, adds it to the
+ * GymSystem, and logs the registration event.
+ * </p>
+ *
+ * <p>
+ * The class is not intended to be instantiated.
+ * </p>
+ */
+
 public class Register {
     /**
      * Handles trainer registration.

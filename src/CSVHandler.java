@@ -12,97 +12,98 @@ import java.util.HashMap;
  */
 
 public class CSVHandler {
-/**
- * Builds a column index map from a CSV header row.
- * Allows all CSV loading to work even when columns are in different orders.
- *
- * @param headerRow the header row split by commas
- * @return a map where keys = header names, value = column index
- */
-private static HashMap<String, Integer> buildColumnMap(String[] headerRow) {
-    HashMap<String, Integer> map = new HashMap<>();
-    for (int i = 0; i < headerRow.length; i++) {
-        map.put(headerRow[i].trim().toLowerCase(), i);
+    /**
+     * Builds a column index map from a CSV header row.
+     * Allows all CSV loading to work even when columns are in different orders.
+     *
+     * @param headerRow the header row split by commas
+     * @return a map where keys = header names, value = column index
+     */
+    private static HashMap<String, Integer> buildColumnMap(String[] headerRow) {
+        HashMap<String, Integer> map = new HashMap<>();
+        for (int i = 0; i < headerRow.length; i++) {
+            map.put(headerRow[i].trim().toLowerCase(), i);
+        }
+        return map;
     }
-    return map;
-}
-// Safe getter to avoid null and index-out-of-bounds
-private static String getValue(HashMap<String, Integer> map, String key, String[] row) {
-    Integer idx = map.get(key);
-    if (idx == null) return "";
-    if (idx < 0 || idx >= row.length) return "";
-    return row[idx].trim();
-}
+
+    // Safe getter to avoid null and index-out-of-bounds
+    private static String getValue(HashMap<String, Integer> map, String key, String[] row) {
+        Integer idx = map.get(key);
+        if (idx == null)
+            return "";
+        if (idx < 0 || idx >= row.length)
+            return "";
+        return row[idx].trim();
+    }
 
     /**
      * Loads users from GymUsersData.csv and inserts them into GymSystem.
      * 
      * Columns can be in ANY order now.
-     * Required column names: id, first name, last name, username, password, user type
+     * Required column names: id, first name, last name, username, password, user
+     * type
      */
     public static void loadUsers(String filePath, GymSystem system) {
-    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
 
-        String header = br.readLine();
-        if (header == null) return;
+            String header = br.readLine();
+            if (header == null)
+                return;
 
-        String[] columns = header.split(",");
-        HashMap<String, Integer> map = buildColumnMap(columns);
+            String[] columns = header.split(",");
+            HashMap<String, Integer> map = buildColumnMap(columns);
 
-        String line;
-        while ((line = br.readLine()) != null) {
+            String line;
+            while ((line = br.readLine()) != null) {
 
-            if (line.trim().isEmpty()) continue;
+                if (line.trim().isEmpty())
+                    continue;
 
-            // KEEP EMPTY COLUMNS
-            String[] raw = line.split(",", -1);
+                // KEEP EMPTY COLUMNS
+                String[] raw = line.split(",", -1);
 
-            int id = Integer.parseInt(getValue(map, "id", raw));
-            String firstName = getValue(map, "first name", raw);
-            String lastName = getValue(map, "last name", raw);
-            String username = getValue(map, "username", raw);
-            String password = getValue(map, "password", raw);
-            String userType = getValue(map, "user type", raw).toLowerCase();
+                int id = Integer.parseInt(getValue(map, "id", raw));
+                String firstName = getValue(map, "first name", raw);
+                String lastName = getValue(map, "last name", raw);
+                String username = getValue(map, "username", raw);
+                String password = getValue(map, "password", raw);
+                String userType = getValue(map, "user type", raw).toLowerCase();
 
-            String membership = getValue(map, "membership", raw);
-            String startDate = getValue(map, "start date", raw);
-            String endDate = getValue(map, "end date", raw);
-            String speciality = getValue(map, "speciality", raw);
+                String membership = getValue(map, "membership", raw);
+                String startDate = getValue(map, "start date", raw);
+                String endDate = getValue(map, "end date", raw);
+                String speciality = getValue(map, "speciality", raw);
 
-            String fullName = firstName + " " + lastName;
+                String fullName = firstName + " " + lastName;
 
-            switch (userType) {
+                switch (userType) {
 
-                case "member":
-                    system.addMember(
-                        new Member(fullName, username, password, id, membership)
-                    );
-                    break;
+                    case "member":
+                        system.addMember(
+                                new Member(fullName, username, password, id, membership));
+                        break;
 
-                case "trainer":
-                    system.addTrainer(
-                        new Trainer(fullName, username, password, id, speciality)
-                    );
-                    break;
+                    case "trainer":
+                        system.addTrainer(
+                                new Trainer(fullName, username, password, id, speciality));
+                        break;
 
-                case "admin":
-                    system.addAdmin(
-                        new Admin(fullName, username, password, id, system)
-                    );
-                    break;
+                    case "admin":
+                        system.addAdmin(
+                                new Admin(fullName, username, password, id, system));
+                        break;
 
-                default:
-                    System.out.println("Unknown user type: " + userType);
+                    default:
+                        System.out.println("Unknown user type: " + userType);
+                }
             }
+
+        } catch (Exception e) {
+            System.out.println("Error reading users CSV: " + e.getMessage());
+            e.printStackTrace();
         }
-
-    } catch (Exception e) {
-        System.out.println("Error reading users CSV: " + e.getMessage());
-        e.printStackTrace();
     }
-}
-
-
 
     /**
      * Loads sessions from GymSessions.csv
@@ -111,43 +112,55 @@ private static String getValue(HashMap<String, Integer> map, String key, String[
      */
     public static void loadSessions(String filePath, GymSystem system) {
 
-    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
 
-        String header = br.readLine();
-        if (header == null) return;
+            String header = br.readLine();
+            if (header == null)
+                return;
 
-        String[] columns = header.split(",");
-        HashMap<String, Integer> map = buildColumnMap(columns);
+            String[] columns = header.split(",");
+            HashMap<String, Integer> map = buildColumnMap(columns);
 
-        String line;
-        while ((line = br.readLine()) != null) {
+            String line;
+            while ((line = br.readLine()) != null) {
 
-            if (line.trim().isEmpty()) continue;
+                if (line.trim().isEmpty())
+                    continue;
 
-            String[] data = line.split(",", -1);
+                String[] data = line.split(",", -1);
 
-            int sessionID = Integer.parseInt(data[map.get("id")]);
-            String type = data[map.get("type")];
-            int capacity = Integer.parseInt(data[map.get("capacity")]);
-            String date = data[map.get("date")];
-            String startTime = data[map.get("start time")];
-            String endTime = data[map.get("end time")];
-            int trainerID = Integer.parseInt(data[map.get("trainer id")]);
+                int sessionID = Integer.parseInt(data[map.get("id")]);
+                String type = data[map.get("type")];
+                int capacity = Integer.parseInt(data[map.get("capacity")]);
+                String date = data[map.get("date")];
+                String startTime = data[map.get("start time")];
+                String endTime = data[map.get("end time")];
+                int trainerID = Integer.parseInt(data[map.get("trainer id")]);
 
-            Trainer trainer = system.findTrainerById(trainerID);
+                Trainer trainer = system.findTrainerById(trainerID);
 
-            WorkoutSession ws = new WorkoutSession(
-                sessionID, type, date, startTime, endTime, capacity, trainer
-            );
+                WorkoutSession ws = new WorkoutSession(
+                        sessionID, type, date, startTime, endTime, capacity, trainer);
 
-            system.addSession(ws);
+                system.addSession(ws);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error reading sessions CSV: " + e.getMessage());
+            e.printStackTrace();
         }
-
-    } catch (Exception e) {
-        System.out.println("Error reading sessions CSV: " + e.getMessage());
-        e.printStackTrace();
     }
-}
+
+    /**
+     * Saves a list of members to a CSV file located at data/Members.csv.
+     *
+     * @param member  an unused parameter in the current implementation; can be
+     *                removed
+     *                unless needed for future functionality
+     * @param members the list of Member objects to be written to the CSV file
+     *
+     * @throws RuntimeException if an I/O error occurs while writing the file.
+     */
 
     public static void saveToFile(Member member, List<Member> members) {
 
@@ -198,77 +211,92 @@ private static String getValue(HashMap<String, Integer> map, String key, String[
     }
 
     /**
- * Loads progress.csv containing memberID → sessionID enrollments.
- *
- * This method restores both:
- * 1. The raw progress list (for saving back to CSV)
- * 2. The actual enrolledMembers inside each WorkoutSession object
- *
- * @param filePath path to progress.csv
- * @param system   reference to GymSystem to store progress and rebuild links
- */
-public static void loadProgress(String filePath, GymSystem system) {
-    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+     * Loads progress.csv containing memberID → sessionID enrollments.
+     *
+     * This method restores both:
+     * 1. The raw progress list (for saving back to CSV)
+     * 2. The actual enrolledMembers inside each WorkoutSession object
+     *
+     * @param filePath path to progress.csv
+     * @param system   reference to GymSystem to store progress and rebuild links
+     */
+    public static void loadProgress(String filePath, GymSystem system) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
 
-        String header = br.readLine(); // skip header
-        if (header == null) return;
+            String header = br.readLine(); // skip header
+            if (header == null)
+                return;
 
-        String line;
-        while ((line = br.readLine()) != null) {
+            String line;
+            while ((line = br.readLine()) != null) {
 
-            String[] parts = line.split(",");
-            if (parts.length < 2) continue;
+                String[] parts = line.split(",");
+                if (parts.length < 2)
+                    continue;
 
-            int memberId = Integer.parseInt(parts[0].trim());
-            int sessionId = Integer.parseInt(parts[1].trim());
+                int memberId = Integer.parseInt(parts[0].trim());
+                int sessionId = Integer.parseInt(parts[1].trim());
 
-            // Store raw record (for CSV saving)
-            system.addProgressRecord(memberId, sessionId);
+                // Store raw record (for CSV saving)
+                system.addProgressRecord(memberId, sessionId);
 
-            // Rebuild in-memory enrollment
-            Member m = system.searchMember(String.valueOf(memberId));
-            WorkoutSession s = system.searchSession(String.valueOf(sessionId));
+                // Rebuild in-memory enrollment
+                Member m = system.searchMember(String.valueOf(memberId));
+                WorkoutSession s = system.searchSession(String.valueOf(sessionId));
 
-            if (m != null && s != null) {
-                s.enrollMember(m);   // restores enrollment for trainer/member menus
+                if (m != null && s != null) {
+                    s.enrollMember(m); // restores enrollment for trainer/member menus
+                }
             }
+
+        } catch (IOException e) {
+            System.out.println("Error loading progress.csv: " + e.getMessage());
         }
-
-    } catch (IOException e) {
-        System.out.println("Error loading progress.csv: " + e.getMessage());
     }
-}
-public static void loadPlans(String filePath, GymSystem system) {
 
-    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+    /**
+     * Loads membership plan data from a CSV file and adds the plans to the provided
+     * GymSystem instance.
+     *
+     * @param filePath the path to the CSV file containing membership plan data
+     * @param system   the GymSystem instance where loaded plans will be stored
+     *
+     * @throws RuntimeException if any error occurs while reading or parsing the
+     *                          file
+     */
 
-        String header = br.readLine();
-        if (header == null) return;
+    public static void loadPlans(String filePath, GymSystem system) {
 
-        String[] columns = header.split(",");
-        HashMap<String, Integer> map = buildColumnMap(columns);
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
 
-        String line;
-        while ((line = br.readLine()) != null) {
+            String header = br.readLine();
+            if (header == null)
+                return;
 
-            if (line.trim().isEmpty()) continue;
+            String[] columns = header.split(",");
+            HashMap<String, Integer> map = buildColumnMap(columns);
 
-            String[] data = line.split(",", -1);
+            String line;
+            while ((line = br.readLine()) != null) {
 
-            int id = Integer.parseInt(data[map.get("id")].trim());
-            String planName = data[map.get("plan name")].trim();
-            int duration = Integer.parseInt(data[map.get("duration in months")].trim());
-            double price = Double.parseDouble(data[map.get("price")].trim());
+                if (line.trim().isEmpty())
+                    continue;
 
-            MembershipPlan plan = new MembershipPlan(id, planName, duration, price);
-            system.addPlan(plan);
+                String[] data = line.split(",", -1);
+
+                int id = Integer.parseInt(data[map.get("id")].trim());
+                String planName = data[map.get("plan name")].trim();
+                int duration = Integer.parseInt(data[map.get("duration in months")].trim());
+                double price = Double.parseDouble(data[map.get("price")].trim());
+
+                MembershipPlan plan = new MembershipPlan(id, planName, duration, price);
+                system.addPlan(plan);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error loading plans CSV: " + e.getMessage());
+            e.printStackTrace();
         }
-
-    } catch (Exception e) {
-        System.out.println("Error loading plans CSV: " + e.getMessage());
-        e.printStackTrace();
     }
-}
-
 
 }
