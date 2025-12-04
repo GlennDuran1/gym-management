@@ -298,5 +298,75 @@ public class CSVHandler {
             e.printStackTrace();
         }
     }
+    public static void saveAllUsers(List<Member> members, List<Trainer> trainers, List<Admin> admins) {
+    try (FileWriter fw = new FileWriter("data/GymUsersData.csv")) {
+
+        fw.write("ID,First Name,Last Name,Username,Password,User Type,Membership,Start Date,End Date,Speciality\n");
+
+        // ---- SAVE MEMBERS ----
+        for (Member m : members) {
+            String[] nameParts = m.getName().split(" ", 2);
+            String first = nameParts[0];
+            String last = nameParts.length > 1 ? nameParts[1] : "";
+
+            fw.write(
+                m.getId() + "," +
+                first + "," +
+                last + "," +
+                m.getUserName() + "," +
+                m.getPassword() + "," +
+                "Member" + "," +
+                m.getMembershipType() + "," +
+                "" + "," +     // start date (you didn't store it in Member)
+                "" + "," +     // end date   (same)
+                "" + "\n"      // speciality empty
+            );
+        }
+
+        // ---- SAVE TRAINERS ----
+        for (Trainer t : trainers) {
+            String[] nameParts = t.getName().split(" ", 2);
+            String first = nameParts[0];
+            String last = nameParts.length > 1 ? nameParts[1] : "";
+
+            fw.write(
+                t.getId() + "," +
+                first + "," +
+                last + "," +
+                t.getUserName() + "," +
+                t.getPassword() + "," +
+                "Trainer" + "," +
+                "" + "," +  // membership
+                "" + "," +  // start date
+                "" + "," +  // end date
+                t.getSpecialty() + "\n"
+            );
+        }
+
+        // ---- SAVE ADMINS ----
+        for (Admin a : admins) {
+            String[] nameParts = a.getName().split(" ", 2);
+            String first = nameParts[0];
+            String last = nameParts.length > 1 ? nameParts[1] : "";
+
+            fw.write(
+                a.getId() + "," +
+                first + "," +
+                last + "," +
+                a.getUserName() + "," +
+                a.getPassword() + "," +
+                "Admin" + "," +
+                "" + "," +  // membership
+                "" + "," +  // start date
+                "" + "," +  // end date
+                "" + "\n"   // speciality empty
+            );
+        }
+
+    } catch (Exception e) {
+        System.out.println("Error saving updated GymUsersData.csv: " + e.getMessage());
+    }
+}
+
 
 }

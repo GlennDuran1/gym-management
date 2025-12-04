@@ -69,6 +69,9 @@ public abstract class Person implements Login {
     public int getId() {
         return id;
     }
+    public String getPassword() {
+    return password;
+}
 
     /**
      * Sets a new name for the person.

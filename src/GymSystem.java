@@ -141,6 +141,7 @@ public class GymSystem {
     public void addMember(Member m) {
         members.add(m);
         System.out.println("Member added");
+        CSVHandler.saveAllUsers(members, trainers, admins);
     }
 
     /**
@@ -209,6 +210,7 @@ public class GymSystem {
     public void addTrainer(Trainer t) {
         trainers.add(t);
         System.out.println("Trainer added");
+       CSVHandler.saveAllUsers(members, trainers, admins); 
     }
 
     /**
@@ -301,6 +303,7 @@ public class GymSystem {
     public void addAdmin(Admin a) {
         admins.add(a);
         System.out.println("Admin added successfully.");
+        CSVHandler.saveAllUsers(members, trainers, admins);
     }
 
     /**

@@ -82,3 +82,6 @@
 04:07:43 12/02/25 - LOGIN (Trainer): ellenripley
 04:07:43 12/02/25 - LOGIN (Admin): michaelcorleone
 04:07:43 12/02/25 - LOGOUT (Admin): michaelcorleone
+21:01:36 12/03/25 - Trainer lollipop123 registered
+21:27:59 12/03/25 - Trainer pops123 registered
+21:28:39 12/03/25 - Member brown 345 registered
