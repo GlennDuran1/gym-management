@@ -116,6 +116,18 @@ public class GymSystem {
         return sessions;
     }
 
+     public List<Member> getMembers() {
+        return members;
+    }
+
+    public List<Trainer> getTrainers() {
+        return trainers;
+    }
+
+    public List<Admin> getAdmins() {
+        return admins;
+    }
+
     // ---- Constructor ----
 
     /**
