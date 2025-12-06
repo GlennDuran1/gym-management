@@ -5,6 +5,7 @@ import java.util.Scanner;
  * Admins.
  */
 public class Updates {
+    static String filepath = "data/GymUsersData.csv";
 
     /**
      * Displays and manages the update menu for a specific Member.
@@ -36,6 +37,7 @@ public class Updates {
                     String newName = input.nextLine();
                     member.setName(newName);
                     Log.write("ADMIN UPDATE MEMBER NAME: " + member.getUserName());
+                    CSVHandler.UpdateUsers(filepath, system);
                     System.out.println("Name updated.");
                     break;
 
@@ -47,6 +49,7 @@ public class Updates {
                     } else {
                         member.setUserName(newUser);
                         Log.write("ADMIN UPDATE MEMBER USERNAME: " + newUser);
+                        CSVHandler.UpdateUsers(filepath, system);
                         System.out.println("Username updated.");
                     }
                     break;
@@ -56,6 +59,7 @@ public class Updates {
                     String newPass = input.nextLine();
                     member.setPassword(newPass);
                     Log.write("ADMIN UPDATE MEMBER PASSWORD: " + member.getUserName());
+                    CSVHandler.UpdateUsers(filepath, system);
                     System.out.println("Password updated.");
                     break;
 
@@ -64,6 +68,7 @@ public class Updates {
                     String newPlan = input.nextLine();
                     member.setMembershipType(newPlan);
                     Log.write("ADMIN UPDATE MEMBER MEMBERSHIP: " + member.getUserName() + " -> " + newPlan);
+                    CSVHandler.UpdateUsers(filepath, system);
                     System.out.println("Membership updated.");
                     break;
 
@@ -108,6 +113,7 @@ public class Updates {
                     String newName = input.nextLine();
                     trainer.setName(newName);
                     Log.write("ADMIN UPDATE TRAINER NAME: " + trainer.getUserName());
+                    CSVHandler.UpdateUsers(filepath, system);
                     System.out.println("Name updated.");
                     break;
 
@@ -120,6 +126,7 @@ public class Updates {
                     } else {
                         trainer.setUserName(newUser);
                         Log.write("ADMIN UPDATE TRAINER USERNAME: " + newUser);
+                        CSVHandler.UpdateUsers(filepath, system);
                         System.out.println("Username updated.");
                     }
                     break;
@@ -129,6 +136,7 @@ public class Updates {
                     String newPass = input.nextLine();
                     trainer.setPassword(newPass);
                     Log.write("ADMIN UPDATE TRAINER PASSWORD: " + trainer.getUserName());
+                    CSVHandler.UpdateUsers(filepath, system);
                     System.out.println("Password updated.");
                     break;
 
@@ -137,6 +145,7 @@ public class Updates {
                     String newSpec = input.nextLine();
                     trainer.setSpecialty(newSpec);
                     Log.write("ADMIN UPDATE TRAINER SPECIALTY: " + trainer.getUserName() + " - " + newSpec);
+                    CSVHandler.UpdateUsers(filepath, system);
                     System.out.println("Specialty updated.");
                     break;
 
@@ -179,6 +188,7 @@ public class Updates {
                     String newName = input.nextLine();
                     admin.setName(newName);
                     Log.write("ADMIN UPDATE ADMIN NAME: " + admin.getUserName());
+                    CSVHandler.UpdateUsers(filepath, system);
                     System.out.println("Name updated.");
                     break;
 
@@ -190,6 +200,7 @@ public class Updates {
                     } else {
                         admin.setUserName(newUser);
                         Log.write("ADMIN UPDATE ADMIN USERNAME: " + newUser);
+                        CSVHandler.UpdateUsers(filepath, system);
                         System.out.println("Username updated.");
                     }
                     break;
@@ -199,6 +210,7 @@ public class Updates {
                     String newPass = input.nextLine();
                     admin.setPassword(newPass);
                     Log.write("ADMIN UPDATE ADMIN PASSWORD: " + admin.getUserName());
+                    CSVHandler.UpdateUsers(filepath, system);
                     System.out.println("Password updated.");
                     break;
 
