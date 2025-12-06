@@ -368,5 +368,60 @@ public class CSVHandler {
     }
 }
 
+    public static void UpdateUsers(String filePath, GymSystem system) {
+
+        try (FileWriter writer = new FileWriter(filePath)) {
+
+            // Write the header
+            writer.write(
+                    "ID,First Name,Last Name,Username,Password,User Type,Membership,Start Date,End Date,Speciality\n");
+
+            // --- MEMBERS ---
+            for (Member m : system.getMembers()) {
+                writer.write(
+                        m.getId() + "," +
+                                m.getName() + "," +
+                                 "," +
+                                m.getUserName() + "," +
+                                m.getPassword() + "," +
+                                "Member," +
+                                m.getMembershipType() + "," +
+                                "\n");
+            }
+
+            // --- TRAINERS ---
+            for (Trainer t : system.getTrainers()) {
+                writer.write(
+                        t.getId() + "," +
+                                t.getName() + "," +
+                                "," + "," +
+                                t.getUserName() + "," +
+                                t.getPassword() + "," +
+                                "Trainer," +
+                                ",,,," + // Membership, Start, End are empty
+                                t.getSpecialty() +
+                                "\n");
+            }
+
+            // --- ADMINS ---
+            for (Admin a : system.getAdmins()) {
+                writer.write(
+                        a.getId() + "," +
+                                a.getName() + "," +
+                                "," + "," +
+                                a.getUserName() + "," +
+                                a.getPassword() + "," +
+                                "Admin," +
+                                ",,,," + // Membership, Start, End, Specialty empty
+                                "\n");
+            }
+
+            System.out.println("CSV updated in EXACT required format.");
+
+        } catch (Exception e) {
+            System.out.println("ERROR writing CSV: " + e.getMessage());
+        }
+    }
+
 
 }
