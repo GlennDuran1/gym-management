@@ -7,6 +7,7 @@ import java.util.Scanner;
  */
 
 public class ManageMenus {
+    static String filepath = "data/GymUsersData.csv";
 
     /**
      * Displays and controls the admin management menu.
@@ -85,6 +86,7 @@ public class ManageMenus {
                         if (confirm.equalsIgnoreCase("y")) {
                             system.deleteAdmin(toDelete);
                             Log.write("ADMIN DELETE ADMIN: " + toDelete.getUserName());
+                            CSVHandler.UpdateUsers(filepath, system);
                             System.out.println("Admin deleted.");
                         } else {
                             System.out.println("Delete cancelled.");
@@ -181,6 +183,7 @@ public class ManageMenus {
                         if (confirm.equalsIgnoreCase("y")) {
                             system.deleteTrainer(toDelete);
                             Log.write("ADMIN DELETE TRAINER: " + toDelete.getUserName());
+                            CSVHandler.UpdateUsers(filepath, system);
                             System.out.println("Trainer deleted.");
                         } else {
                             System.out.println("Delete cancelled.");
@@ -272,6 +275,7 @@ public class ManageMenus {
                         if (confirm.equalsIgnoreCase("y")) {
                             system.deleteMember(toDelete);
                             Log.write("ADMIN DELETE MEMBER: " + toDelete.getUserName());
+                            CSVHandler.UpdateUsers(filepath, system);
                             System.out.println("Member deleted.");
                         } else {
                             System.out.println("Delete cancelled.");
